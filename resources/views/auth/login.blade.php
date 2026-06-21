@@ -74,12 +74,13 @@
         .main-content {
             flex: 1;
             background: linear-gradient(135deg, #f8f9ff 0%, #e8f4fd 50%, #f0fff4 100%);
-            padding: 40px;
+            padding: 100px 40px 40px 40px;
             position: relative;
             overflow-y: auto;
             min-height: 100vh;
         }
         .main-content.login-mode {
+            padding: 40px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -314,13 +315,13 @@
 
         @if(auth()->check() && auth()->user()->is_admin && request()->has('view') && request()->view == 'admin')
             <!-- Admin Panel Content -->
-            <div class="p-5" style="background: #f8f9ff; min-height: 100vh;">
-                <div class="page-header" style="margin-bottom: 30px;">
-                    <h1 style="font-size: 1.75rem; color: #1a202c; font-weight: 700; margin-bottom: 4px;">Manajemen Operasional</h1>
-                    <p style="color: #6c757d; margin: 0;">Kelola ketersediaan produk dan publikasi informasi komunitas.</p>
+            <div class="container-fluid">
+                <div class="page-header mb-5">
+                    <h1 class="fw-bold" style="font-size: 1.75rem;">Manajemen Operasional</h1>
+                    <p class="text-muted mb-0">Kelola ketersediaan produk dan publikasi informasi komunitas.</p>
                 </div>
 
-                <div class="row mt-5">
+                <div class="row">
                     <div class="col-12">
                         <div class="card mb-4" style="border: 1px solid #dee2e6; border-radius: 4px; box-shadow: 0 2px 8px rgba(0,0,0,0.05);">
                             <div class="card-header d-flex justify-content-between align-items-center" style="background: white; border-bottom: 1px solid #dee2e6; padding: 16px 20px;">
@@ -495,7 +496,7 @@
             </div>
         @elseif(auth()->check() && auth()->user()->is_admin)
             <!-- Profile Content -->
-            <div class="container-fluid mt-5">
+            <div class="container-fluid">
                 <div class="row justify-content-center">
                     <div class="col-lg-6 col-md-8 col-sm-10">
                         @if(session('status'))
@@ -676,7 +677,7 @@
     <script>
         const togglePassword = document.getElementById('togglePassword');
         const password = document.getElementById('password');
-        
+
         if (togglePassword && password) {
             togglePassword.addEventListener('click', function() {
                 const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
