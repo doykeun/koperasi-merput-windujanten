@@ -40,9 +40,11 @@ Route::prefix('koperasi_merput_windujanten')->name('public.')->group(function ()
 
 // Admin Routes - /kopmerput-admin (requires auth and is_admin)
 Route::prefix('kopmerput-admin')->name('admin.')->group(function () {
-    // Public admin prefix route: just show login page regardless
+    // Public admin prefix route: show login or profile/admin panel
     Route::get('/', function () {
-        return view('auth.login');
+        $produks = \App\Models\Produk::with('category')->latest()->take(4)->get();
+        $beritas = \App\Models\Berita::latest()->take(4)->get();
+        return view('auth.login', compact('produks', 'beritas'));
     });
 
     // Guest routes (login only)

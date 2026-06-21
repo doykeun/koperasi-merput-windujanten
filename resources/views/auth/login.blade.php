@@ -286,7 +286,19 @@
                         </a>
                         <a href="/kopmerput-admin?view=admin" class="{{ request()->has('view') && request()->view == 'admin' ? 'active' : '' }}">
                             <i class="bi bi-speedometer2"></i>
-                            Admin Panel
+                            Dashboard
+                        </a>
+                        <a href="{{ route('admin.produk.index') }}">
+                            <i class="bi bi-box-seam"></i>
+                            Produk
+                        </a>
+                        <a href="{{ route('admin.berita.index') }}">
+                            <i class="bi bi-newspaper"></i>
+                            Berita
+                        </a>
+                        <a href="{{ route('admin.category.index') }}">
+                            <i class="bi bi-tags"></i>
+                            Kategori
                         </a>
                         <form method="POST" action="{{ route('admin.logout') }}">
                             @csrf
@@ -317,23 +329,54 @@
             <!-- Admin Panel Content -->
             <div class="container-fluid">
                 <div class="page-header mb-5">
-                    <h1 class="fw-bold" style="font-size: 1.75rem;">Manajemen Operasional</h1>
-                    <p class="text-muted mb-0">Kelola ketersediaan produk dan publikasi informasi komunitas.</p>
+                    <h1 class="fw-bold" style="font-size: 1.75rem;">Dashboard</h1>
+                    <p class="text-muted mb-0">Ringkasan data produk dan berita.</p>
+                </div>
+
+                <!-- Quick Stats -->
+                <div class="row mb-5">
+                    <div class="col-md-3 mb-3">
+                        <div class="card shadow-sm">
+                            <div class="card-body">
+                                <h5 class="card-title text-muted small">Total Produk</h5>
+                                <h2 class="fw-bold text-primary">{{ \App\Models\Produk::count() }}</h2>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 mb-3">
+                        <div class="card shadow-sm">
+                            <div class="card-body">
+                                <h5 class="card-title text-muted small">Total Berita</h5>
+                                <h2 class="fw-bold text-success">{{ \App\Models\Berita::count() }}</h2>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 mb-3">
+                        <div class="card shadow-sm">
+                            <div class="card-body">
+                                <h5 class="card-title text-muted small">Produk Tersedia</h5>
+                                <h2 class="fw-bold text-info">{{ \App\Models\Produk::where('stok', '>', 0)->count() }}</h2>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 mb-3">
+                        <div class="card shadow-sm">
+                            <div class="card-body">
+                                <h5 class="card-title text-muted small">Produk Habis</h5>
+                                <h2 class="fw-bold text-danger">{{ \App\Models\Produk::where('stok', '<=', 0)->count() }}</h2>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
                 <div class="row">
                     <div class="col-12">
-                        <div class="card mb-4" style="border: 1px solid #dee2e6; border-radius: 4px; box-shadow: 0 2px 8px rgba(0,0,0,0.05);">
-                            <div class="card-header d-flex justify-content-between align-items-center" style="background: white; border-bottom: 1px solid #dee2e6; padding: 16px 20px;">
-                                <h5 class="mb-0"><i class="bi bi-clipboard-check me-2 text-primary"></i> Manajemen Stok Produk</h5>
-                                <div class="d-flex gap-2">
-                                    <button class="btn btn-outline-secondary btn-sm">
-                                        <i class="bi bi-filter me-1"></i> Filter
-                                    </button>
-                                    <button class="btn btn-primary btn-sm">
-                                        <i class="bi bi-download me-1"></i> Ekspor Laporan
-                                    </button>
-                                </div>
+                        <div class="card mb-4 shadow-sm">
+                            <div class="card-header d-flex justify-content-between align-items-center bg-white">
+                                <h5 class="mb-0 fw-semibold"><i class="bi bi-box-seam me-2 text-primary"></i> Produk Terbaru</h5>
+                                <a href="{{ route('admin.produk.index') }}" class="btn btn-primary btn-sm">
+                                    <i class="bi bi-arrow-right me-1"></i> Lihat Semua
+                                </a>
                             </div>
                             <div class="card-body p-0">
                                 <table class="table table-striped table-bordered mb-0">
@@ -341,154 +384,86 @@
                                         <tr>
                                             <th class="text-uppercase small fw-semibold text-muted px-4">Nama Produk</th>
                                             <th class="text-uppercase small fw-semibold text-muted">Kategori</th>
-                                            <th class="text-uppercase small fw-semibold text-muted">Stok Saat Ini</th>
+                                            <th class="text-uppercase small fw-semibold text-muted">Harga</th>
+                                            <th class="text-uppercase small fw-semibold text-muted">Stok</th>
                                             <th class="text-uppercase small fw-semibold text-muted">Status</th>
                                             <th class="text-uppercase small fw-semibold text-muted text-center">Aksi</th>
                                         </tr>
                                     </thead>
                                     <tbody class="align-middle">
-                                        <tr>
-                                            <td class="px-4 fw-medium">Beras Premium 5kg</td>
-                                            <td class="text-muted small">Sembako</td>
-                                            <td class="fw-bold text-dark">15 Kg</td>
-                                            <td><span class="badge bg-success rounded-pill px-3">Tersedia</span></td>
-                                            <td class="text-center">
-                                                <button class="btn btn-primary btn-sm">
-                                                    <i class="bi bi-plus-square me-1"></i> Tambah Stok
-                                                </button>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td class="px-4 fw-medium">Minyak Goreng 1L</td>
-                                            <td class="text-muted small">Sembako</td>
-                                            <td class="fw-bold text-dark">2 Dus</td>
-                                            <td><span class="badge bg-info text-dark rounded-pill px-3">Stok Menipis</span></td>
-                                            <td class="text-center">
-                                                <button class="btn btn-primary btn-sm">
-                                                    <i class="bi bi-plus-square me-1"></i> Tambah Stok
-                                                </button>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td class="px-4 fw-medium">Indomie Goreng</td>
-                                            <td class="text-muted small">Sembako</td>
-                                            <td class="fw-bold text-dark">10 Dus</td>
-                                            <td><span class="badge bg-success rounded-pill px-3">Tersedia</span></td>
-                                            <td class="text-center">
-                                                <button class="btn btn-primary btn-sm">
-                                                    <i class="bi bi-plus-square me-1"></i> Tambah Stok
-                                                </button>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td class="px-4 fw-medium">Le Mineral</td>
-                                            <td class="text-muted small">Sembako</td>
-                                            <td class="fw-bold text-dark">0 Dus</td>
-                                            <td><span class="badge bg-danger rounded-pill px-3">Stok Habis</span></td>
-                                            <td class="text-center">
-                                                <button class="btn btn-primary btn-sm">
-                                                    <i class="bi bi-plus-square me-1"></i> Tambah Stok
-                                                </button>
-                                            </td>
-                                        </tr>
+                                        @forelse($produks as $produk)
+                                            <tr>
+                                                <td class="px-4 fw-medium">{{ $produk->nama_produk }}</td>
+                                                <td class="text-muted small">{{ $produk->category ? $produk->category->name : '-' }}</td>
+                                                <td class="fw-bold text-dark">Rp {{ number_format($produk->harga, 0, ',', '.') }}</td>
+                                                <td class="fw-bold text-dark">{{ $produk->stok }}</td>
+                                                <td>
+                                                    @if($produk->stok > 0 && $produk->stok <= 5)
+                                                        <span class="badge bg-info text-dark rounded-pill px-3">Stok Menipis</span>
+                                                    @elseif($produk->stok > 0)
+                                                        <span class="badge bg-success rounded-pill px-3">Tersedia</span>
+                                                    @else
+                                                        <span class="badge bg-danger rounded-pill px-3">Stok Habis</span>
+                                                    @endif
+                                                </td>
+                                                <td class="text-center">
+                                                    <a href="{{ route('admin.produk.edit', $produk) }}" class="btn btn-primary btn-sm">
+                                                        <i class="bi bi-pencil me-1"></i> Edit
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                        @empty
+                                            <tr>
+                                                <td colspan="6" class="text-center py-4">
+                                                    Belum ada produk. <a href="{{ route('admin.produk.create') }}" class="fw-semibold">Buat produk baru</a>.
+                                                </td>
+                                            </tr>
+                                        @endforelse
                                     </tbody>
-                                    <tfoot>
-                                        <tr>
-                                            <td colspan="5" class="px-4 py-3">
-                                                <div class="d-flex justify-content-between align-items-center small text-muted">
-                                                    <span>Menampilkan 4 dari 40 produk</span>
-                                                    <div class="d-flex gap-1">
-                                                        <button class="btn btn-sm btn-outline-secondary"><i class="bi bi-chevron-left"></i></button>
-                                                        <button class="btn btn-sm btn-primary">1</button>
-                                                        <button class="btn btn-sm btn-outline-secondary">2</button>
-                                                        <button class="btn btn-sm btn-outline-secondary"><i class="bi bi-chevron-right"></i></button>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    </tfoot>
                                 </table>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <div class="row mt-4">
-                    <div class="col-lg-8">
-                        <div class="card" style="border: 1px solid #dee2e6; border-radius: 4px; box-shadow: 0 2px 8px rgba(0,0,0,0.05);">
-                            <div class="card-body p-5">
-                                <h3 class="fw-semibold mb-5"><i class="bi bi-newspaper me-2 text-success"></i> Buat Berita Baru</h3>
-                                <form method="POST" action="#">
-                                    <div class="mb-4">
-                                        <label class="form-label fw-semibold small">Judul Berita</label>
-                                        <input type="text" class="form-control" placeholder="Masukkan judul yang informatif...">
-                                    </div>
-                                    <div class="mb-4">
-                                        <label class="form-label fw-semibold small">Konten Berita</label>
-                                        <textarea class="form-control" rows="6" placeholder="Tuliskan isi berita atau pengumuman di sini..."></textarea>
-                                    </div>
-                                    <div class="row g-4">
-                                        <div class="col-md-6">
-                                            <label class="form-label fw-semibold small">Kategori</label>
-                                            <select class="form-select">
-                                                <option selected>Pengumuman</option>
-                                                <option>Promo</option>
-                                                <option>Info Koperasi</option>
-                                            </select>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <label class="form-label fw-semibold small">Status Publikasi</label>
-                                            <div class="d-flex gap-3 align-items-center pt-2">
-                                                <div class="form-check">
-                                                    <input class="form-check-input" type="radio" name="status" id="draft" checked>
-                                                    <label class="form-check-label" for="draft">
-                                                        Draft
-                                                    </label>
-                                                </div>
-                                                <div class="form-check">
-                                                    <input class="form-check-input" type="radio" name="status" id="publish">
-                                                    <label class="form-check-label" for="publish">
-                                                        Langsung Terbit
-                                                    </label>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="d-flex justify-content-end gap-3 mt-5">
-                                        <button type="button" class="btn btn-outline-success px-5" onclick="window.location.href='/kopmerput-admin'">Batal</button>
-                                        <button type="submit" class="btn btn-primary px-5 fw-semibold">Terbitkan Berita</button>
-                                    </div>
-                                </form>
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card mb-4 shadow-sm">
+                            <div class="card-header d-flex justify-content-between align-items-center bg-white">
+                                <h5 class="mb-0 fw-semibold"><i class="bi bi-newspaper me-2 text-success"></i> Berita Terbaru</h5>
+                                <a href="{{ route('admin.berita.index') }}" class="btn btn-success btn-sm">
+                                    <i class="bi bi-arrow-right me-1"></i> Lihat Semua
+                                </a>
                             </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-4">
-                        <div class="card mb-4" style="border: 1px solid #dee2e6; border-radius: 4px; box-shadow: 0 2px 8px rgba(0,0,0,0.05);">
-                            <div class="card-body">
-                                <h5 class="fw-semibold mb-3">Unggah Gambar Utama</h5>
-                                <div class="border border-2 border-dashed border-secondary rounded p-4 text-center">
-                                    <i class="bi bi-cloud-upload display-4 text-muted mb-3"></i>
-                                    <div class="small mb-2 text-dark">Klik atau seret gambar ke sini</div>
-                                    <div class="small text-muted">Rekomendasi: 1200x630px (Max 2MB)</div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="card mb-4" style="border: 1px solid #dee2e6; border-radius: 4px; box-shadow: 0 2px 8px rgba(0,0,0,0.05);">
-                            <div class="card-body">
-                                <h5 class="fw-semibold mb-3">Pratinjau Visual</h5>
-                                <img src="https://images.unsplash.com/photo-1499951360447-b19be8fe80f5?w=400&h=225&fit=crop" alt="Preview" class="img-fluid rounded">
-                                <div class="mt-3 small text-muted">Contoh tampilan judul berita pada aplikasi mobile member...</div>
-                            </div>
-                        </div>
-                        <div class="p-4 bg-success bg-opacity-10 rounded">
-                            <div class="d-flex gap-3">
-                                <i class="bi bi-info-circle text-success display-6"></i>
-                                <div>
-                                    <div class="fw-semibold text-success">Tips Publikasi</div>
-                                    <div class="small text-muted mt-1">
-                                        Gunakan bahasa yang inklusif dan transparan untuk membangun kepercayaan anggota koperasi. Sertakan data konkret jika memungkinkan.
-                                    </div>
-                                </div>
+                            <div class="card-body p-0">
+                                <table class="table table-striped table-bordered mb-0">
+                                    <thead class="bg-light">
+                                        <tr>
+                                            <th class="text-uppercase small fw-semibold text-muted px-4">Judul Berita</th>
+                                            <th class="text-uppercase small fw-semibold text-muted">Tanggal</th>
+                                            <th class="text-uppercase small fw-semibold text-muted text-center">Aksi</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="align-middle">
+                                        @forelse($beritas as $berita)
+                                            <tr>
+                                                <td class="px-4 fw-medium">{{ $berita->judul }}</td>
+                                                <td class="text-muted small">{{ $berita->created_at->format('d M Y') }}</td>
+                                                <td class="text-center">
+                                                    <a href="{{ route('admin.berita.edit', $berita) }}" class="btn btn-success btn-sm">
+                                                        <i class="bi bi-pencil me-1"></i> Edit
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                        @empty
+                                            <tr>
+                                                <td colspan="3" class="text-center py-4">
+                                                    Belum ada berita. <a href="{{ route('admin.berita.create') }}" class="fw-semibold">Buat berita baru</a>.
+                                                </td>
+                                            </tr>
+                                        @endforelse
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
                     </div>
