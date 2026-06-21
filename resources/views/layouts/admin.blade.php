@@ -128,28 +128,28 @@
             <div class="sidebar-subtitle">Koperasi Indonesia</div>
             
             <nav class="sidebar-nav">
-                <div style="margin-top: auto; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.1);">
-                    @if(auth()->check() && auth()->user()->is_admin)
-                        <a href="/kopmerput-admin" class="{{ !request()->has('view') ? 'active' : '' }}">
-                            <i class="bi bi-person-circle"></i>
-                            Profile
-                        </a>
-                        <a href="/kopmerput-admin?view=admin" class="{{ request()->has('view') && request()->view == 'admin' ? 'active' : '' }}">
-                            <i class="bi bi-speedometer2"></i>
-                            Dashboard
-                        </a>
-                        <a href="{{ route('admin.produk.index') }}">
-                            <i class="bi bi-box-seam"></i>
-                            Produk
-                        </a>
-                        <a href="{{ route('admin.berita.index') }}">
-                            <i class="bi bi-newspaper"></i>
-                            Berita
-                        </a>
-                        <a href="{{ route('admin.category.index') }}">
-                            <i class="bi bi-tags"></i>
-                            Kategori
-                        </a>
+                @if(auth()->check() && auth()->user()->is_admin)
+                    <a href="/kopmerput-admin" class="{{ !request()->has('view') ? 'active' : '' }}">
+                        <i class="bi bi-person-circle"></i>
+                        Profile
+                    </a>
+                    <a href="/kopmerput-admin?view=admin" class="{{ request()->has('view') && request()->view == 'admin' ? 'active' : '' }}">
+                        <i class="bi bi-speedometer2"></i>
+                        Dashboard
+                    </a>
+                    <a href="{{ route('admin.produk.index') }}">
+                        <i class="bi bi-box-seam"></i>
+                        Produk
+                    </a>
+                    <a href="{{ route('admin.berita.index') }}">
+                        <i class="bi bi-newspaper"></i>
+                        Berita
+                    </a>
+                    <a href="{{ route('admin.category.index') }}">
+                        <i class="bi bi-tags"></i>
+                        Kategori
+                    </a>
+                    <div style="margin-top: 20px; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.1);">
                         <form method="POST" action="{{ route('admin.logout') }}">
                             @csrf
                             <button type="submit" style="display: flex; align-items: center; gap: 12px; padding: 12px 16px; color: #adb5bd; text-decoration: none; border-radius: 6px; margin-bottom: 8px; transition: all 0.2s; font-size: 0.95rem; background: transparent; border: none; width: 100%; cursor: pointer;">
@@ -157,8 +157,8 @@
                                 Keluar
                             </button>
                         </form>
-                    @endif
-                </div>
+                    </div>
+                @endif
             </nav>
         </div>
 

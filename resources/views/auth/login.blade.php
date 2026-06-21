@@ -236,34 +236,28 @@
             font-size: 1.2rem;
         }
         .top-header {
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            background: rgba(255,255,255,0.8);
-            backdrop-filter: blur(10px);
-            padding: 20px 40px;
+            background: white;
+            padding: 16px 40px;
             display: flex;
-            justify-content: flex-end;
+            justify-content: space-between;
             align-items: center;
-            gap: 24px;
-            border-bottom: 1px solid rgba(0,0,0,0.05);
+            border-bottom: 1px solid #e9ecef;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.05);
         }
-        .top-header .brand {
-            margin-right: auto;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            font-size: 1.5rem;
+        .top-header h3 {
+            font-size: 1.25rem;
             font-weight: 700;
-            color: #002b7f;
+            color: #1e40af;
+            margin: 0;
         }
-        .top-header .brand .flag {
-            font-size: 2.5rem;
+        .top-header .header-actions {
+            display: flex;
+            gap: 16px;
+            align-items: center;
         }
-        .top-header i {
-            font-size: 1.75rem;
-            color: #495057;
+        .top-header .header-actions i {
+            font-size: 1.4rem;
+            color: #6c757d;
             cursor: pointer;
         }
         .alert {
@@ -278,50 +272,51 @@
         <div class="sidebar-subtitle">Koperasi Indonesia</div>
         
         <nav class="sidebar-nav">
-            <div style="margin-top: auto; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.1);">
-                @if(auth()->check() && auth()->user()->is_admin)
-                        <a href="/kopmerput-admin" class="{{ !request()->has('view') ? 'active' : '' }}">
-                            <i class="bi bi-person-circle"></i>
-                            Profile
-                        </a>
-                        <a href="/kopmerput-admin?view=admin" class="{{ request()->has('view') && request()->view == 'admin' ? 'active' : '' }}">
-                            <i class="bi bi-speedometer2"></i>
-                            Dashboard
-                        </a>
-                        <a href="{{ route('admin.produk.index') }}">
-                            <i class="bi bi-box-seam"></i>
-                            Produk
-                        </a>
-                        <a href="{{ route('admin.berita.index') }}">
-                            <i class="bi bi-newspaper"></i>
-                            Berita
-                        </a>
-                        <a href="{{ route('admin.category.index') }}">
-                            <i class="bi bi-tags"></i>
-                            Kategori
-                        </a>
-                        <form method="POST" action="{{ route('admin.logout') }}">
-                            @csrf
-                            <button type="submit" style="display: flex; align-items: center; gap: 12px; padding: 12px 16px; color: #adb5bd; text-decoration: none; border-radius: 6px; margin-bottom: 8px; transition: all 0.2s; font-size: 0.95rem; background: transparent; border: none; width: 100%; cursor: pointer;">
-                                <i class="bi bi-box-arrow-left" style="font-size: 1.2rem; width: 24px;"></i>
-                                Keluar
-                            </button>
-                        </form>
-                    @else
-                        <a href="{{ route('admin.login') }}" class="active">
-                            <i class="bi bi-lock"></i>
-                            Login Admin
-                        </a>
-                    @endif
-            </div>
+            @if(auth()->check() && auth()->user()->is_admin)
+                <a href="/kopmerput-admin" class="{{ !request()->has('view') ? 'active' : '' }}">
+                    <i class="bi bi-person-circle"></i>
+                    Profile
+                </a>
+                <a href="/kopmerput-admin?view=admin" class="{{ request()->has('view') && request()->view == 'admin' ? 'active' : '' }}">
+                    <i class="bi bi-speedometer2"></i>
+                    Dashboard
+                </a>
+                <a href="{{ route('admin.produk.index') }}">
+                    <i class="bi bi-box-seam"></i>
+                    Produk
+                </a>
+                <a href="{{ route('admin.berita.index') }}">
+                    <i class="bi bi-newspaper"></i>
+                    Berita
+                </a>
+                <a href="{{ route('admin.category.index') }}">
+                    <i class="bi bi-tags"></i>
+                    Kategori
+                </a>
+                <div style="margin-top: 20px; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.1);">
+                    <form method="POST" action="{{ route('admin.logout') }}">
+                        @csrf
+                        <button type="submit" style="display: flex; align-items: center; gap: 12px; padding: 12px 16px; color: #adb5bd; text-decoration: none; border-radius: 6px; margin-bottom: 8px; transition: all 0.2s; font-size: 0.95rem; background: transparent; border: none; width: 100%; cursor: pointer;">
+                            <i class="bi bi-box-arrow-left" style="font-size: 1.2rem; width: 24px;"></i>
+                            Keluar
+                        </button>
+                    </form>
+                </div>
+            @else
+                <a href="{{ route('admin.login') }}" class="active">
+                    <i class="bi bi-lock"></i>
+                    Login Admin
+                </a>
+            @endif
         </nav>
     </div>
 
     <div class="main-content {{ !auth()->check() || !auth()->user()->is_admin ? 'login-mode' : '' }}">
         <div class="top-header">
-            <div class="brand">
-                <span>Koperasi</span>
-                <span class="flag">🇮🇩</span>
+            <h3>Koperasi <span style="color: #1e40af;">ID</span></h3>
+            <div class="header-actions">
+                <i class="bi bi-bell"></i>
+                <i class="bi bi-question-circle"></i>
             </div>
         </div>
 
