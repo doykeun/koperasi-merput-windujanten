@@ -19,32 +19,27 @@
         }
         .sidebar {
             width: 280px;
-            background: linear-gradient(180deg, #1a202c 0%, #2d3748 100%);
-            padding: 30px 24px;
+            background: linear-gradient(180deg, #343a40 0%, #2d3436 100%);
+            padding: 30px 20px;
+            flex-shrink: 0;
             display: flex;
             flex-direction: column;
-            position: fixed;
-            height: 100vh;
-            left: 0;
-            top: 0;
-            z-index: 100;
         }
         .sidebar-brand {
-            font-size: 1.5rem;
-            font-weight: 800;
             color: white;
-            margin-bottom: 4px;
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 8px;
         }
-        .sidebar-brand span { color: #dc2626; }
+        .sidebar-brand span {
+            color: #dc3545;
+        }
         .sidebar-subtitle {
-            color: #9ca3af;
+            color: #6c757d;
             font-size: 0.85rem;
-            margin-bottom: 32px;
+            margin-bottom: 40px;
         }
         .sidebar-nav {
-            display: flex;
-            flex-direction: column;
-            gap: 4px;
             flex: 1;
         }
         .sidebar-nav a {
@@ -60,15 +55,22 @@
             font-size: 0.95rem;
         }
         .sidebar-nav a:hover {
-            background: rgba(255,255,255,0.1);
             color: white;
+            background: rgba(255,255,255,0.1);
         }
         .sidebar-nav a.active {
-            background: rgba(220,38,38,0.2);
+            background: rgba(255,255,255,0.15);
             color: white;
-            font-weight: 600;
+            border-left: 3px solid #dee2e6;
         }
-        .sidebar-nav i { font-size: 1.2rem; width: 24px; }
+        .sidebar-nav a i {
+            font-size: 1.2rem;
+            width: 24px;
+        }
+        .sidebar-nav form button:hover {
+            color: white;
+            background: rgba(255,255,255,0.1);
+        }
         .main-content-wrapper {
             flex: 1;
             margin-left: 280px;
@@ -137,15 +139,15 @@
                         <i class="bi bi-speedometer2"></i>
                         Dashboard
                     </a>
-                    <a href="{{ route('admin.produk.index') }}">
+                    <a href="{{ route('admin.produk.index') }}" class="{{ request()->routeIs('admin.produk.*') ? 'active' : '' }}">
                         <i class="bi bi-box-seam"></i>
                         Produk
                     </a>
-                    <a href="{{ route('admin.berita.index') }}">
+                    <a href="{{ route('admin.berita.index') }}" class="{{ request()->routeIs('admin.berita.*') ? 'active' : '' }}">
                         <i class="bi bi-newspaper"></i>
                         Berita
                     </a>
-                    <a href="{{ route('admin.category.index') }}">
+                    <a href="{{ route('admin.category.index') }}" class="{{ request()->routeIs('admin.category.*') ? 'active' : '' }}">
                         <i class="bi bi-tags"></i>
                         Kategori
                     </a>
