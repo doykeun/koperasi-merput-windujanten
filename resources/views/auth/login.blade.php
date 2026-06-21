@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login Admin - Koperasi Merah Putih</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
     <style>
         * {
             margin: 0;
@@ -15,7 +15,10 @@
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
             min-height: 100vh;
+        }
+        .app-container {
             display: flex;
+            min-height: 100vh;
         }
         .sidebar {
             width: 280px;
@@ -24,6 +27,11 @@
             flex-shrink: 0;
             display: flex;
             flex-direction: column;
+            position: fixed;
+            height: 100vh;
+            left: 0;
+            top: 0;
+            z-index: 100;
         }
         .sidebar-brand {
             color: white;
@@ -71,13 +79,10 @@
             color: white;
             background: rgba(255,255,255,0.1);
         }
-        .app-container {
-            display: flex;
-            min-height: 100vh;
-        }
         .main-content-wrapper {
             flex: 1;
             margin-left: 280px;
+            min-height: 100vh;
         }
         .main-content {
             flex: 1;
@@ -114,11 +119,11 @@
         .login-card {
             background: white;
             border: 1px solid #dee2e6;
-            border-radius: 4px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
             padding: 40px;
             width: 100%;
-            max-width: 420px;
+            max-width: 450px;
             position: relative;
             z-index: 1;
         }
@@ -126,10 +131,11 @@
             content: '';
             position: absolute;
             top: 0;
-            left: 40px;
-            width: 40px;
+            left: 0;
+            right: 0;
             height: 4px;
-            background: linear-gradient(90deg, #4285f4 0%, #34a853 100%);
+            background: linear-gradient(90deg, #002b7f 0%, #34a853 100%);
+            border-radius: 8px 8px 0 0;
         }
         .login-header h1 {
             font-size: 1.75rem;
@@ -167,7 +173,7 @@
             width: 100%;
             padding: 12px 16px 12px 44px;
             border: 2px solid #dee2e6;
-            border-radius: 4px;
+            border-radius: 6px;
             font-size: 0.95rem;
             transition: all 0.2s;
         }
@@ -220,7 +226,7 @@
             background: linear-gradient(90deg, #002b7f 0%, #0040c8 100%);
             color: white;
             border: none;
-            border-radius: 4px;
+            border-radius: 6px;
             font-size: 0.95rem;
             font-weight: 600;
             cursor: pointer;
@@ -252,6 +258,9 @@
             align-items: center;
             border-bottom: 1px solid #e9ecef;
             box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+            position: sticky;
+            top: 0;
+            z-index: 50;
         }
         .top-header h3 {
             font-size: 1.25rem;
@@ -269,9 +278,21 @@
             color: #6c757d;
             cursor: pointer;
         }
+        .page-header {
+            margin-bottom: 30px;
+        }
+        .page-header h1 {
+            font-size: 1.75rem;
+            color: #1a202c;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+        .page-header p {
+            color: #6c757d;
+            margin: 0;
+        }
         .alert {
-            border-radius: 4px;
-            margin-bottom: 20px;
+            border-radius: 6px;
         }
     </style>
 </head>
@@ -329,46 +350,47 @@
                     <i class="bi bi-question-circle"></i>
                 </div>
             </div>
+            
             <div class="main-content {{ !auth()->check() || !auth()->user()->is_admin ? 'login-mode' : '' }}">
 
         @if(auth()->check() && auth()->user()->is_admin && request()->has('view') && request()->view == 'admin')
             <!-- Admin Panel Content -->
             <div class="container-fluid">
-                <div class="page-header mb-5">
-                    <h1 class="fw-bold" style="font-size: 1.75rem;">Dashboard</h1>
-                    <p class="text-muted mb-0">Ringkasan data produk dan berita.</p>
+                <div class="page-header">
+                    <h1>Dashboard</h1>
+                    <p>Ringkasan data produk dan berita.</p>
                 </div>
 
                 <!-- Quick Stats -->
-                <div class="row mb-5">
-                    <div class="col-md-3 mb-3">
-                        <div class="card shadow-sm">
+                <div class="row g-3 mb-4">
+                    <div class="col-md-3">
+                        <div class="card shadow-sm border-0 h-100">
                             <div class="card-body">
-                                <h5 class="card-title text-muted small">Total Produk</h5>
+                                <h5 class="card-title text-muted small mb-2">Total Produk</h5>
                                 <h2 class="fw-bold text-primary">{{ \App\Models\Produk::count() }}</h2>
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-3 mb-3">
-                        <div class="card shadow-sm">
+                    <div class="col-md-3">
+                        <div class="card shadow-sm border-0 h-100">
                             <div class="card-body">
-                                <h5 class="card-title text-muted small">Total Berita</h5>
+                                <h5 class="card-title text-muted small mb-2">Total Berita</h5>
                                 <h2 class="fw-bold text-success">{{ \App\Models\Berita::count() }}</h2>
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-3 mb-3">
-                        <div class="card shadow-sm">
+                    <div class="col-md-3">
+                        <div class="card shadow-sm border-0 h-100">
                             <div class="card-body">
-                                <h5 class="card-title text-muted small">Produk Tersedia</h5>
+                                <h5 class="card-title text-muted small mb-2">Produk Tersedia</h5>
                                 <h2 class="fw-bold text-info">{{ \App\Models\Produk::where('stok', '>', 0)->count() }}</h2>
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-3 mb-3">
-                        <div class="card shadow-sm">
+                    <div class="col-md-3">
+                        <div class="card shadow-sm border-0 h-100">
                             <div class="card-body">
-                                <h5 class="card-title text-muted small">Produk Habis</h5>
+                                <h5 class="card-title text-muted small mb-2">Produk Habis</h5>
                                 <h2 class="fw-bold text-danger">{{ \App\Models\Produk::where('stok', '<=', 0)->count() }}</h2>
                             </div>
                         </div>
@@ -377,56 +399,58 @@
 
                 <div class="row">
                     <div class="col-12">
-                        <div class="card mb-4 shadow-sm">
-                            <div class="card-header d-flex justify-content-between align-items-center bg-white">
+                        <div class="card mb-4 shadow-sm border-0">
+                            <div class="card-header d-flex justify-content-between align-items-center bg-white border-bottom-0 py-3">
                                 <h5 class="mb-0 fw-semibold"><i class="bi bi-box-seam me-2 text-primary"></i> Produk Terbaru</h5>
                                 <a href="{{ route('admin.produk.index') }}" class="btn btn-primary btn-sm">
                                     <i class="bi bi-arrow-right me-1"></i> Lihat Semua
                                 </a>
                             </div>
                             <div class="card-body p-0">
-                                <table class="table table-striped table-bordered mb-0">
-                                    <thead class="bg-light">
-                                        <tr>
-                                            <th class="text-uppercase small fw-semibold text-muted px-4">Nama Produk</th>
-                                            <th class="text-uppercase small fw-semibold text-muted">Kategori</th>
-                                            <th class="text-uppercase small fw-semibold text-muted">Harga</th>
-                                            <th class="text-uppercase small fw-semibold text-muted">Stok</th>
-                                            <th class="text-uppercase small fw-semibold text-muted">Status</th>
-                                            <th class="text-uppercase small fw-semibold text-muted text-center">Aksi</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody class="align-middle">
-                                        @forelse($produks as $produk)
+                                <div class="table-responsive">
+                                    <table class="table table-striped table-bordered mb-0">
+                                        <thead class="bg-light">
                                             <tr>
-                                                <td class="px-4 fw-medium">{{ $produk->nama_produk }}</td>
-                                                <td class="text-muted small">{{ $produk->category ? $produk->category->name : '-' }}</td>
-                                                <td class="fw-bold text-dark">Rp {{ number_format($produk->harga, 0, ',', '.') }}</td>
-                                                <td class="fw-bold text-dark">{{ $produk->stok }}</td>
-                                                <td>
-                                                    @if($produk->stok > 0 && $produk->stok <= 5)
-                                                        <span class="badge bg-info text-dark rounded-pill px-3">Stok Menipis</span>
-                                                    @elseif($produk->stok > 0)
-                                                        <span class="badge bg-success rounded-pill px-3">Tersedia</span>
-                                                    @else
-                                                        <span class="badge bg-danger rounded-pill px-3">Stok Habis</span>
-                                                    @endif
-                                                </td>
-                                                <td class="text-center">
-                                                    <a href="{{ route('admin.produk.edit', $produk) }}" class="btn btn-primary btn-sm">
-                                                        <i class="bi bi-pencil me-1"></i> Edit
-                                                    </a>
-                                                </td>
+                                                <th class="text-uppercase small fw-semibold text-muted px-4">Nama Produk</th>
+                                                <th class="text-uppercase small fw-semibold text-muted">Kategori</th>
+                                                <th class="text-uppercase small fw-semibold text-muted">Harga</th>
+                                                <th class="text-uppercase small fw-semibold text-muted">Stok</th>
+                                                <th class="text-uppercase small fw-semibold text-muted">Status</th>
+                                                <th class="text-uppercase small fw-semibold text-muted text-center">Aksi</th>
                                             </tr>
-                                        @empty
-                                            <tr>
-                                                <td colspan="6" class="text-center py-4">
-                                                    Belum ada produk. <a href="{{ route('admin.produk.create') }}" class="fw-semibold">Buat produk baru</a>.
-                                                </td>
-                                            </tr>
-                                        @endforelse
-                                    </tbody>
-                                </table>
+                                        </thead>
+                                        <tbody class="align-middle">
+                                            @forelse($produks as $produk)
+                                                <tr>
+                                                    <td class="px-4 fw-medium">{{ $produk->nama_produk }}</td>
+                                                    <td class="text-muted small">{{ $produk->category ? $produk->category->name : '-' }}</td>
+                                                    <td class="fw-bold text-dark">Rp {{ number_format($produk->harga, 0, ',', '.') }}</td>
+                                                    <td class="fw-bold text-dark">{{ $produk->stok }}</td>
+                                                    <td>
+                                                        @if($produk->stok > 0 && $produk->stok <= 5)
+                                                            <span class="badge bg-info text-dark rounded-pill px-3">Stok Menipis</span>
+                                                        @elseif($produk->stok > 0)
+                                                            <span class="badge bg-success rounded-pill px-3">Tersedia</span>
+                                                        @else
+                                                            <span class="badge bg-danger rounded-pill px-3">Stok Habis</span>
+                                                        @endif
+                                                    </td>
+                                                    <td class="text-center">
+                                                        <a href="{{ route('admin.produk.edit', $produk) }}" class="btn btn-primary btn-sm">
+                                                            <i class="bi bi-pencil me-1"></i> Edit
+                                                        </a>
+                                                    </td>
+                                                </tr>
+                                            @empty
+                                                <tr>
+                                                    <td colspan="6" class="text-center py-4">
+                                                        Belum ada produk. <a href="{{ route('admin.produk.create') }}" class="fw-semibold">Buat produk baru</a>.
+                                                    </td>
+                                                </tr>
+                                            @endforelse
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -434,42 +458,44 @@
 
                 <div class="row">
                     <div class="col-12">
-                        <div class="card mb-4 shadow-sm">
-                            <div class="card-header d-flex justify-content-between align-items-center bg-white">
+                        <div class="card mb-4 shadow-sm border-0">
+                            <div class="card-header d-flex justify-content-between align-items-center bg-white border-bottom-0 py-3">
                                 <h5 class="mb-0 fw-semibold"><i class="bi bi-newspaper me-2 text-success"></i> Berita Terbaru</h5>
                                 <a href="{{ route('admin.berita.index') }}" class="btn btn-success btn-sm">
                                     <i class="bi bi-arrow-right me-1"></i> Lihat Semua
                                 </a>
                             </div>
                             <div class="card-body p-0">
-                                <table class="table table-striped table-bordered mb-0">
-                                    <thead class="bg-light">
-                                        <tr>
-                                            <th class="text-uppercase small fw-semibold text-muted px-4">Judul Berita</th>
-                                            <th class="text-uppercase small fw-semibold text-muted">Tanggal</th>
-                                            <th class="text-uppercase small fw-semibold text-muted text-center">Aksi</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody class="align-middle">
-                                        @forelse($beritas as $berita)
+                                <div class="table-responsive">
+                                    <table class="table table-striped table-bordered mb-0">
+                                        <thead class="bg-light">
                                             <tr>
-                                                <td class="px-4 fw-medium">{{ $berita->judul }}</td>
-                                                <td class="text-muted small">{{ $berita->created_at->format('d M Y') }}</td>
-                                                <td class="text-center">
-                                                    <a href="{{ route('admin.berita.edit', $berita) }}" class="btn btn-success btn-sm">
-                                                        <i class="bi bi-pencil me-1"></i> Edit
-                                                    </a>
-                                                </td>
+                                                <th class="text-uppercase small fw-semibold text-muted px-4">Judul Berita</th>
+                                                <th class="text-uppercase small fw-semibold text-muted">Tanggal</th>
+                                                <th class="text-uppercase small fw-semibold text-muted text-center">Aksi</th>
                                             </tr>
-                                        @empty
-                                            <tr>
-                                                <td colspan="3" class="text-center py-4">
-                                                    Belum ada berita. <a href="{{ route('admin.berita.create') }}" class="fw-semibold">Buat berita baru</a>.
-                                                </td>
-                                            </tr>
-                                        @endforelse
-                                    </tbody>
-                                </table>
+                                        </thead>
+                                        <tbody class="align-middle">
+                                            @forelse($beritas as $berita)
+                                                <tr>
+                                                    <td class="px-4 fw-medium">{{ $berita->judul }}</td>
+                                                    <td class="text-muted small">{{ $berita->created_at->format('d M Y') }}</td>
+                                                    <td class="text-center">
+                                                        <a href="{{ route('admin.berita.edit', $berita) }}" class="btn btn-success btn-sm">
+                                                            <i class="bi bi-pencil me-1"></i> Edit
+                                                        </a>
+                                                    </td>
+                                                </tr>
+                                            @empty
+                                                <tr>
+                                                    <td colspan="3" class="text-center py-4">
+                                                        Belum ada berita. <a href="{{ route('admin.berita.create') }}" class="fw-semibold">Buat berita baru</a>.
+                                                    </td>
+                                                </tr>
+                                            @endforelse
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -485,7 +511,7 @@
                                 {{ session('status') === 'profile-updated' ? 'Profil berhasil diperbarui!' : 'Password berhasil diubah!' }}
                             </div>
                         @endif
-                        <div class="card shadow-sm">
+                        <div class="card shadow-sm border-0">
                             <div class="card-body p-5">
                                 <h5 class="card-title mb-4 d-flex align-items-center gap-2 fw-semibold">
                                     <i class="bi bi-person-circle text-primary fs-4"></i>
@@ -529,7 +555,7 @@
                                         <button type="button" class="btn btn-link text-decoration-none text-warning p-0 fw-semibold" data-bs-toggle="modal" data-bs-target="#changePasswordModal">
                                             <i class="bi bi-key me-1"></i>Ubah Password
                                         </button>
-                                        <button type="submit" class="btn btn-primary btn-sm px-4">
+                                        <button type="submit" class="btn btn-primary px-4">
                                             <i class="bi bi-check-lg me-1"></i>Simpan
                                         </button>
                                     </div>
@@ -593,13 +619,13 @@
 
             <div class="login-card">
                 @if(session('error'))
-                    <div class="alert alert-danger">
+                    <div class="alert alert-danger mb-4">
                         {{ session('error') }}
                     </div>
                 @endif
 
                 @if(session('status'))
-                    <div class="alert alert-success">
+                    <div class="alert alert-success mb-4">
                         {{ session('status') }}
                     </div>
                 @endif
@@ -656,7 +682,7 @@
         </div>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script>
         const togglePassword = document.getElementById('togglePassword');
         const password = document.getElementById('password');

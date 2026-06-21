@@ -7,11 +7,14 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
         body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: #f8f9fa;
-            color: #1a202c;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            min-height: 100vh;
         }
         .app-container {
             display: flex;
@@ -24,6 +27,11 @@
             flex-shrink: 0;
             display: flex;
             flex-direction: column;
+            position: fixed;
+            height: 100vh;
+            left: 0;
+            top: 0;
+            z-index: 100;
         }
         .sidebar-brand {
             color: white;
@@ -74,6 +82,7 @@
         .main-content-wrapper {
             flex: 1;
             margin-left: 280px;
+            min-height: 100vh;
         }
         .top-header {
             background: white;
@@ -83,6 +92,9 @@
             align-items: center;
             border-bottom: 1px solid #e9ecef;
             box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+            position: sticky;
+            top: 0;
+            z-index: 50;
         }
         .top-header h3 {
             font-size: 1.25rem;
@@ -120,6 +132,9 @@
         .page-header p {
             color: #6c757d;
             margin: 0;
+        }
+        .alert {
+            border-radius: 6px;
         }
     </style>
 </head>
@@ -172,7 +187,7 @@
                     <i class="bi bi-question-circle"></i>
                 </div>
             </div>
-
+            
             <div class="main-content">
                 @if(session('success'))
                     <div class="alert alert-success mb-4">
