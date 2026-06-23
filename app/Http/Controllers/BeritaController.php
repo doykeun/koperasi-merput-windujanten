@@ -42,6 +42,11 @@ class BeritaController extends Controller
         ]);
 
         $data = $request->all();
+        $data['is_penting'] = $request->has('is_penting');
+
+        if ($data['is_penting']) {
+            Berita::where('is_penting', true)->update(['is_penting' => false]);
+        }
 
         if ($request->hasFile('foto')) {
             $data['foto'] = $request->file('foto')->store('berita', 'public');
@@ -89,6 +94,11 @@ class BeritaController extends Controller
         ]);
 
         $data = $request->all();
+        $data['is_penting'] = $request->has('is_penting');
+
+        if ($data['is_penting']) {
+            Berita::where('is_penting', true)->update(['is_penting' => false]);
+        }
 
         if ($request->hasFile('foto')) {
             if ($berita->foto) {

@@ -22,7 +22,7 @@
         }
         .sidebar {
             width: 280px;
-            background: linear-gradient(180deg, #343a40 0%, #2d3436 100%);
+            background: linear-gradient(180deg, #dc2626 0%, #991b1b 100%);
             padding: 30px 20px;
             flex-shrink: 0;
             display: flex;
@@ -32,6 +32,7 @@
             left: 0;
             top: 0;
             z-index: 100;
+            box-shadow: 4px 0 20px rgba(0,0,0,0.1);
         }
         .sidebar-brand {
             color: white;
@@ -40,10 +41,10 @@
             margin-bottom: 8px;
         }
         .sidebar-brand span {
-            color: #dc3545;
+            color: white;
         }
         .sidebar-subtitle {
-            color: #6c757d;
+            color: #fecaca;
             font-size: 0.85rem;
             margin-bottom: 40px;
         }
@@ -54,30 +55,32 @@
             display: flex;
             align-items: center;
             gap: 12px;
-            padding: 12px 16px;
-            color: #adb5bd;
+            padding: 14px 16px;
+            color: #fee2e2;
             text-decoration: none;
-            border-radius: 6px;
+            border-radius: 10px;
             margin-bottom: 8px;
-            transition: all 0.2s;
+            transition: all 0.3s;
             font-size: 0.95rem;
         }
         .sidebar-nav a:hover {
             color: white;
-            background: rgba(255,255,255,0.1);
+            background: rgba(255,255,255,0.2);
+            transform: translateX(4px);
         }
         .sidebar-nav a.active {
-            background: rgba(255,255,255,0.15);
-            color: white;
-            border-left: 3px solid #dee2e6;
+            background: white;
+            color: #dc2626;
+            border-left: none;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
         }
         .sidebar-nav a i {
-            font-size: 1.2rem;
+            font-size: 1.25rem;
             width: 24px;
         }
         .sidebar-nav form button:hover {
             color: white;
-            background: rgba(255,255,255,0.1);
+            background: rgba(255,255,255,0.2);
         }
         .main-content-wrapper {
             flex: 1;
@@ -86,7 +89,7 @@
         }
         .main-content {
             flex: 1;
-            background: linear-gradient(135deg, #f8f9ff 0%, #e8f4fd 50%, #f0fff4 100%);
+            background: linear-gradient(135deg, #fff5f5 0%, #fee2e2 50%, #ffffff 100%);
             padding: 40px;
             position: relative;
             overflow-y: auto;
@@ -107,20 +110,20 @@
             opacity: 0.15;
         }
         .bg-decoration.blue {
-            background: #4285f4;
+            background: #dc2626;
             top: -100px;
             right: -100px;
         }
         .bg-decoration.green {
-            background: #34a853;
+            background: #ef4444;
             bottom: -100px;
             left: -100px;
         }
         .login-card {
             background: white;
-            border: 1px solid #dee2e6;
-            border-radius: 8px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            border: 1px solid #fecaca;
+            border-radius: 12px;
+            box-shadow: 0 8px 24px rgba(220, 38, 38, 0.1);
             padding: 40px;
             width: 100%;
             max-width: 450px;
@@ -134,8 +137,8 @@
             left: 0;
             right: 0;
             height: 4px;
-            background: linear-gradient(90deg, #002b7f 0%, #34a853 100%);
-            border-radius: 8px 8px 0 0;
+            background: linear-gradient(90deg, #dc2626 0%, #ef4444 100%);
+            border-radius: 12px 12px 0 0;
         }
         .login-header h1 {
             font-size: 1.75rem;
@@ -179,8 +182,8 @@
         }
         .input-wrapper input:focus {
             outline: none;
-            border-color: #4285f4;
-            box-shadow: 0 0 0 3px rgba(66, 133, 244, 0.1);
+            border-color: #dc2626;
+            box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.1);
         }
         .input-wrapper .toggle-password {
             left: auto;
@@ -212,7 +215,7 @@
             cursor: pointer;
         }
         .forgot-password {
-            color: #0d6efd;
+            color: #dc2626;
             text-decoration: none;
             font-size: 0.875rem;
             font-weight: 500;
@@ -223,18 +226,19 @@
         .btn-login {
             width: 100%;
             padding: 14px;
-            background: linear-gradient(90deg, #002b7f 0%, #0040c8 100%);
+            background: linear-gradient(90deg, #dc2626 0%, #ef4444 100%);
             color: white;
             border: none;
-            border-radius: 6px;
+            border-radius: 8px;
             font-size: 0.95rem;
             font-weight: 600;
             cursor: pointer;
             transition: all 0.2s;
         }
         .btn-login:hover {
-            background: linear-gradient(90deg, #001f5f 0%, #0030a0 100%);
+            background: linear-gradient(90deg, #b91c1c 0%, #dc2626 100%);
             transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(220, 38, 38, 0.3);
         }
         .security-info {
             display: flex;
@@ -242,12 +246,12 @@
             gap: 10px;
             margin-top: 32px;
             padding-top: 24px;
-            border-top: 1px solid #e9ecef;
-            color: #6c757d;
+            border-top: 1px solid #fecaca;
+            color: #991b1b;
             font-size: 0.85rem;
         }
         .security-info i {
-            color: #34a853;
+            color: #dc2626;
             font-size: 1.2rem;
         }
         .top-header {
@@ -256,8 +260,8 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            border-bottom: 1px solid #e9ecef;
-            box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+            border-bottom: 2px solid #dc2626;
+            box-shadow: 0 2px 10px rgba(220, 38, 38, 0.1);
             position: sticky;
             top: 0;
             z-index: 50;
@@ -265,7 +269,7 @@
         .top-header h3 {
             font-size: 1.25rem;
             font-weight: 700;
-            color: #1e40af;
+            color: #dc2626;
             margin: 0;
         }
         .top-header .header-actions {
@@ -344,11 +348,7 @@
 
         <div class="main-content-wrapper">
             <div class="top-header">
-                <h3>Koperasi <span style="color: #1e40af;">ID</span></h3>
-                <div class="header-actions">
-                    <i class="bi bi-bell"></i>
-                    <i class="bi bi-question-circle"></i>
-                </div>
+                <h3 class="w-100 text-center">KOPERASI MERAH PUTIH WINDUJANTEN</h3>
             </div>
             
             <div class="main-content {{ !auth()->check() || !auth()->user()->is_admin ? 'login-mode' : '' }}">
@@ -367,7 +367,7 @@
                         <div class="card shadow-sm border-0 h-100">
                             <div class="card-body">
                                 <h5 class="card-title text-muted small mb-2">Total Produk</h5>
-                                <h2 class="fw-bold text-primary">{{ \App\Models\Produk::count() }}</h2>
+                                <h2 class="fw-bold text-danger">{{ \App\Models\Produk::count() }}</h2>
                             </div>
                         </div>
                     </div>
@@ -375,7 +375,7 @@
                         <div class="card shadow-sm border-0 h-100">
                             <div class="card-body">
                                 <h5 class="card-title text-muted small mb-2">Total Berita</h5>
-                                <h2 class="fw-bold text-success">{{ \App\Models\Berita::count() }}</h2>
+                                <h2 class="fw-bold text-danger">{{ \App\Models\Berita::count() }}</h2>
                             </div>
                         </div>
                     </div>
@@ -383,7 +383,7 @@
                         <div class="card shadow-sm border-0 h-100">
                             <div class="card-body">
                                 <h5 class="card-title text-muted small mb-2">Produk Tersedia</h5>
-                                <h2 class="fw-bold text-info">{{ \App\Models\Produk::where('stok', '>', 0)->count() }}</h2>
+                                <h2 class="fw-bold text-danger">{{ \App\Models\Produk::where('stok', '>', 0)->count() }}</h2>
                             </div>
                         </div>
                     </div>
@@ -401,8 +401,8 @@
                     <div class="col-12">
                         <div class="card mb-4 shadow-sm border-0">
                             <div class="card-header d-flex justify-content-between align-items-center bg-white border-bottom-0 py-3">
-                                <h5 class="mb-0 fw-semibold"><i class="bi bi-box-seam me-2 text-primary"></i> Produk Terbaru</h5>
-                                <a href="{{ route('admin.produk.index') }}" class="btn btn-primary btn-sm">
+                                <h5 class="mb-0 fw-semibold"><i class="bi bi-box-seam me-2 text-danger"></i> Produk Terbaru</h5>
+                                <a href="{{ route('admin.produk.index') }}" class="btn btn-danger btn-sm">
                                     <i class="bi bi-arrow-right me-1"></i> Lihat Semua
                                 </a>
                             </div>
@@ -436,7 +436,7 @@
                                                         @endif
                                                     </td>
                                                     <td class="text-center">
-                                                        <a href="{{ route('admin.produk.edit', $produk) }}" class="btn btn-primary btn-sm">
+                                                        <a href="{{ route('admin.produk.edit', $produk) }}" class="btn btn-danger btn-sm">
                                                             <i class="bi bi-pencil me-1"></i> Edit
                                                         </a>
                                                     </td>
@@ -460,8 +460,8 @@
                     <div class="col-12">
                         <div class="card mb-4 shadow-sm border-0">
                             <div class="card-header d-flex justify-content-between align-items-center bg-white border-bottom-0 py-3">
-                                <h5 class="mb-0 fw-semibold"><i class="bi bi-newspaper me-2 text-success"></i> Berita Terbaru</h5>
-                                <a href="{{ route('admin.berita.index') }}" class="btn btn-success btn-sm">
+                                <h5 class="mb-0 fw-semibold"><i class="bi bi-newspaper me-2 text-danger"></i> Berita Terbaru</h5>
+                                <a href="{{ route('admin.berita.index') }}" class="btn btn-danger btn-sm">
                                     <i class="bi bi-arrow-right me-1"></i> Lihat Semua
                                 </a>
                             </div>
@@ -481,7 +481,7 @@
                                                     <td class="px-4 fw-medium">{{ $berita->judul }}</td>
                                                     <td class="text-muted small">{{ $berita->created_at->format('d M Y') }}</td>
                                                     <td class="text-center">
-                                                        <a href="{{ route('admin.berita.edit', $berita) }}" class="btn btn-success btn-sm">
+                                                        <a href="{{ route('admin.berita.edit', $berita) }}" class="btn btn-danger btn-sm">
                                                             <i class="bi bi-pencil me-1"></i> Edit
                                                         </a>
                                                     </td>
@@ -514,12 +514,12 @@
                         <div class="card shadow-sm border-0">
                             <div class="card-body p-5">
                                 <h5 class="card-title mb-4 d-flex align-items-center gap-2 fw-semibold">
-                                    <i class="bi bi-person-circle text-primary fs-4"></i>
+                                    <i class="bi bi-person-circle text-danger fs-4"></i>
                                     Informasi Akun
                                 </h5>
 
                                 <div class="text-center mb-5">
-                                    <div class="mx-auto mb-3 d-flex align-items-center justify-content-center" style="width: 100px; height: 100px; border-radius: 50%; background: linear-gradient(135deg, #002b7f 0%, #0040c8 100%);">
+                                    <div class="mx-auto mb-3 d-flex align-items-center justify-content-center" style="width: 100px; height: 100px; border-radius: 50%; background: linear-gradient(135deg, #dc2626 0%, #ef4444 100%);">
                                         <i class="bi bi-person-fill text-white fs-1"></i>
                                     </div>
                                     <h4 class="fw-semibold text-dark mb-1">{{ auth()->user()->name ?? 'Admin Koperasi' }}</h4>
@@ -552,10 +552,10 @@
                                     </div>
 
                                     <div class="d-flex justify-content-between align-items-center">
-                                        <button type="button" class="btn btn-link text-decoration-none text-warning p-0 fw-semibold" data-bs-toggle="modal" data-bs-target="#changePasswordModal">
+                                        <button type="button" class="btn btn-link text-decoration-none text-danger p-0 fw-semibold" data-bs-toggle="modal" data-bs-target="#changePasswordModal">
                                             <i class="bi bi-key me-1"></i>Ubah Password
                                         </button>
-                                        <button type="submit" class="btn btn-primary px-4">
+                                        <button type="submit" class="btn btn-danger px-4">
                                             <i class="bi bi-check-lg me-1"></i>Simpan
                                         </button>
                                     </div>
@@ -572,7 +572,7 @@
                     <div class="modal-content">
                         <div class="modal-header">
                             <h5 class="modal-title fw-semibold" id="changePasswordModalLabel">
-                                <i class="bi bi-key-fill me-2 text-primary"></i>Ubah Password
+                                <i class="bi bi-key-fill me-2 text-danger"></i>Ubah Password
                             </h5>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
@@ -603,8 +603,8 @@
                                 </div>
                             </div>
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Batal</button>
-                                <button type="submit" class="btn btn-primary btn-sm">
+                                <button type="button" class="btn btn-outline-danger btn-sm" data-bs-dismiss="modal">Batal</button>
+                                <button type="submit" class="btn btn-danger btn-sm">
                                     <i class="bi bi-check-lg me-1"></i>Ubah Password
                                 </button>
                             </div>
@@ -632,8 +632,8 @@
 
                 <div class="login-header">
                     <div style="display: flex; gap: 6px; margin-bottom: 16px;">
-                        <div style="width: 20px; height: 4px; background: #002b7f; border-radius: 2px;"></div>
-                        <div style="width: 40px; height: 4px; background: #34a853; border-radius: 2px;"></div>
+                        <div style="width: 20px; height: 4px; background: #dc2626; border-radius: 2px;"></div>
+                        <div style="width: 40px; height: 4px; background: #ef4444; border-radius: 2px;"></div>
                     </div>
                     <h1>Login Administrator</h1>
                     <p>Silakan masukkan kredensial Anda untuk mengakses panel manajemen koperasi.</p>

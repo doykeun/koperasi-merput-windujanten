@@ -52,10 +52,10 @@
                 <input type="file" class="form-control" id="foto" name="foto" accept="image/*">
             </div>
             <div class="d-flex gap-2">
-                <button type="submit" class="btn btn-primary">
+                <button type="submit" class="btn btn-danger">
                     <i class="bi bi-check-lg me-1"></i> Update
                 </button>
-                <a href="{{ route('admin.produk.index') }}" class="btn btn-secondary">
+                <a href="{{ route('admin.produk.index') }}" class="btn btn-outline-danger">
                     <i class="bi bi-arrow-left me-1"></i> Kembali
                 </a>
             </div>

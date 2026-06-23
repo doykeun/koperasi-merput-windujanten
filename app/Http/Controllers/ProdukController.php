@@ -27,9 +27,27 @@ class ProdukController extends Controller
             $query->where('category_id', request()->category);
         }
         
+        // Handle sorting
+        $sort = request()->get('sort', 'price_asc');
+        switch ($sort) {
+            case 'price_desc':
+                $query->orderBy('harga', 'desc');
+                break;
+            case 'name_asc':
+                $query->orderBy('nama_produk', 'asc');
+                break;
+            case 'name_desc':
+                $query->orderBy('nama_produk', 'desc');
+                break;
+            case 'price_asc':
+            default:
+                $query->orderBy('harga', 'asc');
+                break;
+        }
+        
         $produks = $query->get();
         $categories = Category::all();
-        return view('produk.index', compact('produks', 'categories'));
+        return view('produk.index', compact('produks', 'categories', 'sort'));
     }
 
     /**

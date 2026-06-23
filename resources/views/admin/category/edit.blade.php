@@ -18,10 +18,10 @@
                 <input type="text" class="form-control" id="name" name="name" value="{{ $category->name }}" required>
             </div>
             <div class="d-flex gap-2">
-                <button type="submit" class="btn btn-primary">
+                <button type="submit" class="btn btn-danger">
                     <i class="bi bi-check-lg me-1"></i> Update
                 </button>
-                <a href="{{ route('admin.category.index') }}" class="btn btn-secondary">
+                <a href="{{ route('admin.category.index') }}" class="btn btn-outline-danger">
                     <i class="bi bi-arrow-left me-1"></i> Kembali
                 </a>
             </div>

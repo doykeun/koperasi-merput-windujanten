@@ -26,7 +26,7 @@ class ProfileController extends Controller
 
         $user->save();
 
-        return Redirect::to('/kopmerput-admin')->with('status', 'profile-updated');
+        return Redirect::route('admin.profile')->with('success', 'Profil berhasil diperbarui!');
     }
 
     /**
@@ -43,6 +43,6 @@ class ProfileController extends Controller
         $user->password = Hash::make($request->password);
         $user->save();
 
-        return Redirect::to('/kopmerput-admin')->with('status', 'password-updated');
+        return Redirect::route('admin.profile')->with('success', 'Password berhasil diubah!');
     }
 }

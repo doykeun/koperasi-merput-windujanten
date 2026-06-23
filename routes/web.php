@@ -4,6 +4,8 @@ use App\Http\Controllers\BeritaController;
 use App\Http\Controllers\ProdukController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\ProfilKoperasiController;
+use App\Http\Controllers\StrukturOrganisasiController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
@@ -29,22 +31,26 @@ Route::prefix('koperasi_merput_windujanten')->name('public.')->group(function ()
     Route::get('/', function () {
         $produks = Produk::where('stok', '>', 0)->get();
         $beritas = Berita::orderBy('created_at', 'desc')->take(3)->get();
-        return view('home', compact('produks', 'beritas'));
+        $pengumumanPenting = Berita::where('is_penting', true)->latest()->first();
+        return view('home', compact('produks', 'beritas', 'pengumumanPenting'));
     })->name('home');
 
     Route::get('/produk', [ProdukController::class, 'index'])->name('produk.index');
     Route::get('/produk/{produk}', [ProdukController::class, 'show'])->name('produk.show');
     Route::get('/berita', [BeritaController::class, 'index'])->name('berita.index');
     Route::get('/berita/{berita}', [BeritaController::class, 'show'])->name('berita.show');
+    Route::get('/profil', [ProfilKoperasiController::class, 'index'])->name('profil.index');
+    Route::get('/struktur', [StrukturOrganisasiController::class, 'index'])->name('struktur.index');
 });
 
 // Admin Routes - /kopmerput-admin (requires auth and is_admin)
 Route::prefix('kopmerput-admin')->name('admin.')->group(function () {
-    // Public admin prefix route: show login or profile/admin panel
+    // Public admin prefix route: redirect to login or dashboard
     Route::get('/', function () {
-        $produks = \App\Models\Produk::with('category')->latest()->take(4)->get();
-        $beritas = \App\Models\Berita::latest()->take(4)->get();
-        return view('auth.login', compact('produks', 'beritas'));
+        if (Auth::check() && Auth::user()->is_admin) {
+            return redirect()->route('admin.dashboard');
+        }
+        return redirect()->route('admin.login');
     });
 
     // Guest routes (login only)
@@ -55,12 +61,50 @@ Route::prefix('kopmerput-admin')->name('admin.')->group(function () {
 
     // Protected routes
     Route::middleware(['auth', 'is_admin'])->group(function () {
-        Route::post('logout', [App\Http\Controllers\Auth\AuthenticatedSessionController::class, 'destroy'])->name('logout');
-
-
+        // Dashboard
+        Route::get('dashboard', function () {
+            $profil = App\Models\ProfilKoperasi::first();
+            $struktur = App\Models\StrukturOrganisasi::orderBy('urutan')->get();
+            return view('admin.dashboard', compact('profil', 'struktur'));
+        })->name('dashboard');
         
-        Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-        Route::put('/password', [ProfileController::class, 'updatePassword'])->name('password.update');
+        // Profile
+        Route::get('profile', function () {
+            return view('admin.profile');
+        })->name('profile');
+        Route::patch('profile', [ProfileController::class, 'update'])->name('profile.update');
+        Route::put('password', [ProfileController::class, 'updatePassword'])->name('password.update');
+        
+        Route::post('logout', [App\Http\Controllers\Auth\AuthenticatedSessionController::class, 'destroy'])->name('logout');
+        
+        Route::resource('profil', ProfilKoperasiController::class)->only([
+            'index', 'create', 'store', 'edit', 'update'
+        ])->names([
+            'index' => 'profil.index',
+            'create' => 'profil.create',
+            'store' => 'profil.store',
+            'edit' => 'profil.edit',
+            'update' => 'profil.update',
+        ]);
+        
+        Route::resource('struktur', StrukturOrganisasiController::class)->names([
+            'index' => 'struktur.index',
+            'create' => 'struktur.create',
+            'store' => 'struktur.store',
+            'edit' => 'struktur.edit',
+            'update' => 'struktur.update',
+            'destroy' => 'struktur.destroy',
+        ]);
+        
+        Route::resource('category', CategoryController::class)->names([
+            'index' => 'category.index',
+            'create' => 'category.create',
+            'store' => 'category.store',
+            'show' => 'category.show',
+            'edit' => 'category.edit',
+            'update' => 'category.update',
+            'destroy' => 'category.destroy',
+        ]);
         
         Route::resource('produk', ProdukController::class)->names([
             'index' => 'produk.index',
@@ -80,16 +124,6 @@ Route::prefix('kopmerput-admin')->name('admin.')->group(function () {
             'edit' => 'berita.edit',
             'update' => 'berita.update',
             'destroy' => 'berita.destroy',
-        ]);
-        
-        Route::resource('category', CategoryController::class)->names([
-            'index' => 'category.index',
-            'create' => 'category.create',
-            'store' => 'category.store',
-            'show' => 'category.show',
-            'edit' => 'category.edit',
-            'update' => 'category.update',
-            'destroy' => 'category.destroy',
         ]);
     });
 });

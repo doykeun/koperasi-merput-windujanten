@@ -17,10 +17,10 @@
                 <input type="text" class="form-control" id="name" name="name" required placeholder="Masukkan nama kategori">
             </div>
             <div class="d-flex gap-2">
-                <button type="submit" class="btn btn-primary">
+                <button type="submit" class="btn btn-danger">
                     <i class="bi bi-save me-1"></i> Simpan
                 </button>
-                <a href="{{ route('admin.category.index') }}" class="btn btn-secondary">
+                <a href="{{ route('admin.category.index') }}" class="btn btn-outline-danger">
                     <i class="bi bi-arrow-left me-1"></i> Kembali
                 </a>
             </div>

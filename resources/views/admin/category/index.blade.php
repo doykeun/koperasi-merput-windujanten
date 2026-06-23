@@ -8,29 +8,29 @@
     <p>Kelola semua kategori produk</p>
 </div>
 
-<div class="card">
-    <div class="card-header d-flex justify-content-between align-items-center">
-        <span class="fw-semibold">Semua Kategori</span>
-        <a href="{{ route('admin.category.create') }}" class="btn btn-primary btn-sm">
+<div class="card border-0 shadow-sm">
+    <div class="card-header d-flex justify-content-between align-items-center" style="background: linear-gradient(90deg, #dc2626 0%, #991b1b 100%); color: white;">
+        <span class="fw-semibold"><i class="bi bi-tags me-2"></i>Semua Kategori</span>
+        <a href="{{ route('admin.category.create') }}" class="btn btn-light btn-sm fw-semibold">
             <i class="bi bi-plus-lg me-1"></i> Tambah Kategori
         </a>
     </div>
-    <div class="card-body">
-        <table class="table table-hover">
-            <thead>
+    <div class="card-body p-4">
+        <table class="table table-hover align-middle">
+            <thead class="table-light">
                 <tr>
                     <th>No</th>
                     <th>Nama Kategori</th>
-                    <th>Aksi</th>
+                    <th class="text-center">Aksi</th>
                 </tr>
             </thead>
             <tbody>
                 @foreach($categories as $key => $category)
                     <tr>
                         <td>{{ $key + 1 }}</td>
-                        <td class="fw-medium">{{ $category->name }}</td>
-                        <td>
-                            <a href="{{ route('admin.category.edit', $category->id) }}" class="btn btn-warning btn-sm me-1">
+                        <td class="fw-semibold">{{ $category->name }}</td>
+                        <td class="text-center">
+                            <a href="{{ route('admin.category.edit', $category->id) }}" class="btn btn-outline-danger btn-sm me-1">
                                 <i class="bi bi-pencil"></i> Edit
                             </a>
                             <form action="{{ route('admin.category.destroy', $category->id) }}" method="POST" class="d-inline">
