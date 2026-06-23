@@ -53,7 +53,7 @@
         <!-- Products Grid -->
         <div class="row g-4 mb-5">
             @forelse($produks as $produk)
-                <div class="col-lg-4 col-md-6">
+                <div class="col-12 col-md-6 col-lg-4">
                     <div class="card h-100 shadow-sm border border-red-100 hover:shadow-md transition-all">
                         <div class="card-body p-4">
                             @if($produk->stok > 0)

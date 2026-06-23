@@ -11,7 +11,7 @@
         
         <div class="row g-4">
             @foreach($beritas as $berita)
-                <div class="col-md-4">
+                <div class="col-12 col-sm-6 col-md-4">
                     <div class="card h-100 border border-red-100 shadow-sm overflow-hidden hover:shadow-md transition-all">
                         @if($berita->foto)
                             <img src="{{ asset('storage/' . $berita->foto) }}" class="card-img-top" alt="{{ $berita->judul }}" style="height: 200px; object-fit: cover;">

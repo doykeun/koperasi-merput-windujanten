@@ -46,8 +46,20 @@
             height: 100vh;
             left: 0;
             top: 0;
-            z-index: 100;
+            z-index: 1000;
             box-shadow: 4px 0 20px rgba(220, 38, 38, 0.2);
+            transform: translateX(0);
+            transition: transform 0.3s ease;
+        }
+        .sidebar-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 999;
+            display: none;
         }
         .sidebar-brand {
             color: white;
@@ -104,6 +116,7 @@
             flex: 1;
             margin-left: 280px;
             min-height: 100vh;
+            transition: margin-left 0.3s ease;
         }
         .top-header {
             background: white;
@@ -116,6 +129,14 @@
             position: sticky;
             top: 0;
             z-index: 50;
+        }
+        .menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: #dc2626;
+            cursor: pointer;
         }
         .top-header h3 {
             font-size: 1.25rem;
@@ -175,11 +196,52 @@
         .alert {
             border-radius: 6px;
         }
+
+        /* Responsive Styles */
+        @media (max-width: 991.98px) {
+            .sidebar {
+                transform: translateX(-100%);
+            }
+            .sidebar.active {
+                transform: translateX(0);
+            }
+            .sidebar-overlay.active {
+                display: block;
+            }
+            .main-content-wrapper {
+                margin-left: 0;
+            }
+            .menu-toggle {
+                display: block;
+            }
+            .top-header {
+                padding: 12px 20px;
+            }
+            .top-header h3 {
+                font-size: 1.1rem;
+            }
+            .main-content {
+                padding: 20px;
+            }
+        }
+
+        @media (max-width: 767.98px) {
+            .page-header h1 {
+                font-size: 1.5rem;
+            }
+        }
+
+        /* Table responsive */
+        .table-responsive {
+            overflow-x: auto;
+        }
     </style>
 </head>
 <body>
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+    
     <div class="app-container">
-        <div class="sidebar">
+        <div class="sidebar" id="sidebar">
             <div class="sidebar-brand">
                 {{ $profilKoperasi ? explode(' ', $profilKoperasi->nama_koperasi)[0] . ' ' . explode(' ', $profilKoperasi->nama_koperasi)[1] : 'Koperasi Merah Putih' }}
             </div>
@@ -230,8 +292,11 @@
 
         <div class="main-content-wrapper">
             <div class="top-header">
-            <h3 class="w-100 text-center">{{ $profilKoperasi ? strtoupper($profilKoperasi->nama_koperasi) : 'KOPERASI MERAH PUTIH WINDUJANTEN' }}</h3>
-        </div>
+                <button class="menu-toggle" id="menuToggle">
+                    <i class="bi bi-list"></i>
+                </button>
+                <h3 class="w-100 text-center">{{ $profilKoperasi ? strtoupper($profilKoperasi->nama_koperasi) : 'KOPERASI MERAH PUTIH WINDUJANTEN' }}</h3>
+            </div>
             
             <div class="main-content">
                 @if(session('success'))
@@ -251,5 +316,36 @@
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Toggle sidebar for mobile
+        const menuToggle = document.getElementById('menuToggle');
+        const sidebar = document.getElementById('sidebar');
+        const sidebarOverlay = document.getElementById('sidebarOverlay');
+
+        if (menuToggle) {
+            menuToggle.addEventListener('click', function() {
+                sidebar.classList.toggle('active');
+                sidebarOverlay.classList.toggle('active');
+            });
+        }
+
+        if (sidebarOverlay) {
+            sidebarOverlay.addEventListener('click', function() {
+                sidebar.classList.remove('active');
+                sidebarOverlay.classList.remove('active');
+            });
+        }
+
+        // Close sidebar when clicking a link on mobile
+        const sidebarLinks = document.querySelectorAll('.sidebar-nav a');
+        sidebarLinks.forEach(link => {
+            link.addEventListener('click', function() {
+                if (window.innerWidth <= 991.98) {
+                    sidebar.classList.remove('active');
+                    sidebarOverlay.classList.remove('active');
+                }
+            });
+        });
+    </script>
 </body>
 </html>

@@ -52,6 +52,19 @@
             top: 0;
             left: 0;
             box-shadow: 4px 0 20px rgba(220, 38, 38, 0.2);
+            z-index: 1000;
+            transform: translateX(0);
+            transition: transform 0.3s ease;
+        }
+        .sidebar-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 999;
+            display: none;
         }
         .sidebar-brand {
             color: white;
@@ -100,20 +113,13 @@
             font-size: 1.25rem;
             width: 24px;
         }
-        .sidebar-nav form button:hover {
-            color: white;
-            background: rgba(255,255,255,0.1);
-        }
-        .sidebar-nav form button:hover {
-            color: white;
-            background: rgba(255,255,255,0.1);
-        }
         .main-content {
             flex: 1;
             margin-left: 280px;
             display: flex;
             flex-direction: column;
             min-height: 100vh;
+            transition: margin-left 0.3s ease;
         }
         .top-header {
             background: white;
@@ -128,6 +134,14 @@
             position: sticky;
             top: 0;
             z-index: 100;
+        }
+        .menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: #dc2626;
+            cursor: pointer;
         }
         .top-header .brand {
             margin-right: auto;
@@ -149,24 +163,6 @@
         }
         .top-header i:hover {
             color: #dc2626;
-        }
-        .top-header .search-bar {
-            flex: 1;
-            max-width: 360px;
-            margin-right: auto;
-        }
-        .top-header .search-bar input {
-            background: #fef2f2;
-            border: 1px solid #fecaca;
-            border-radius: 12px;
-            padding: 10px 20px;
-            transition: all 0.2s;
-        }
-        .top-header .search-bar input:focus {
-            background: white;
-            border-color: #dc2626;
-            box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.1);
-            outline: none;
         }
         .content-wrapper {
             padding: 30px 40px;
@@ -303,10 +299,55 @@
             background-color: #dc2626;
             border-color: #dc2626;
         }
+
+        /* Responsive Styles */
+        @media (max-width: 991.98px) {
+            .sidebar {
+                transform: translateX(-100%);
+            }
+            .sidebar.active {
+                transform: translateX(0);
+            }
+            .sidebar-overlay.active {
+                display: block;
+            }
+            .main-content {
+                margin-left: 0;
+            }
+            .menu-toggle {
+                display: block;
+            }
+            .top-header {
+                padding: 15px 20px;
+            }
+            .top-header .brand {
+                font-size: 1.1rem;
+            }
+            .content-wrapper {
+                padding: 20px;
+            }
+            .footer {
+                padding: 15px 20px;
+            }
+        }
+
+        @media (max-width: 767.98px) {
+            .page-header h1 {
+                font-size: 1.5rem;
+            }
+            .hero-section {
+                padding: 30px 20px;
+            }
+            .hero-content {
+                padding: 20px;
+            }
+        }
     </style>
 </head>
 <body>
-    <div class="sidebar">
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+    
+    <div class="sidebar" id="sidebar">
         <div class="sidebar-brand">
             {{ $profilKoperasi ? explode(' ', $profilKoperasi->nama_koperasi)[0] . ' ' . explode(' ', $profilKoperasi->nama_koperasi)[1] : 'Koperasi Merah Putih' }}
         </div>
@@ -333,12 +374,14 @@
                 <i class="bi bi-people"></i>
                 Struktur Organisasi
             </a>
-
         </nav>
     </div>
 
     <div class="main-content">
         <div class="top-header">
+            <button class="menu-toggle" id="menuToggle">
+                <i class="bi bi-list"></i>
+            </button>
             <div class="brand w-100 justify-content-center">
                 <span>{{ $profilKoperasi ? strtoupper($profilKoperasi->nama_koperasi) : 'KOPERASI MERAH PUTIH WINDUJANTEN' }}</span>
             </div>
@@ -366,8 +409,8 @@
         </div>
 
         <footer class="footer">
-            <div class="d-flex justify-content-between align-items-center">
-                <div>&copy; {{ date('Y') }} Koperasi Merah Putih. Berizin dan diawasi oleh Kemenkop UKM.</div>
+            <div class="d-flex flex-column flex-md-row justify-content-between align-items-center gap-2">
+                <div class="text-center text-md-start">&copy; {{ date('Y') }} Koperasi Merah Putih. Berizin dan diawasi oleh Kemenkop UKM.</div>
                 <div class="d-flex gap-4">
                     <a href="#" class="text-decoration-none text-muted">Syarat & Ketentuan</a>
                     <a href="#" class="text-decoration-none text-muted">Kebijakan Privasi</a>
@@ -410,5 +453,36 @@
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Toggle sidebar for mobile
+        const menuToggle = document.getElementById('menuToggle');
+        const sidebar = document.getElementById('sidebar');
+        const sidebarOverlay = document.getElementById('sidebarOverlay');
+
+        if (menuToggle) {
+            menuToggle.addEventListener('click', function() {
+                sidebar.classList.toggle('active');
+                sidebarOverlay.classList.toggle('active');
+            });
+        }
+
+        if (sidebarOverlay) {
+            sidebarOverlay.addEventListener('click', function() {
+                sidebar.classList.remove('active');
+                sidebarOverlay.classList.remove('active');
+            });
+        }
+
+        // Close sidebar when clicking a link on mobile
+        const sidebarLinks = document.querySelectorAll('.sidebar-nav a');
+        sidebarLinks.forEach(link => {
+            link.addEventListener('click', function() {
+                if (window.innerWidth <= 991.98) {
+                    sidebar.classList.remove('active');
+                    sidebarOverlay.classList.remove('active');
+                }
+            });
+        });
+    </script>
 </body>
 </html>

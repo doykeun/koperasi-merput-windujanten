@@ -14,7 +14,7 @@
 
         <div class="row">
             <!-- Produk Section -->
-            <div class="col-lg-8">
+            <div class="col-12 col-lg-8">
                 <div class="d-flex justify-content-between align-items-center mb-4">
                     <h4 class="fw-bold" style="color: #dc2626;">Daftar Produk</h4>
                     <a href="{{ route('public.produk.index') }}" class="text-danger text-decoration-none fw-bold small">
@@ -23,7 +23,7 @@
                 </div>
                 <div class="row g-4">
                     @foreach($produks as $produk)
-                        <div class="col-md-6">
+                        <div class="col-12 col-md-6">
                             <div class="card h-100 border border-red-100 shadow-sm overflow-hidden hover:shadow-md transition-all">
                                 <div class="card-body p-4">
                                     @if($produk->stok > 0)
@@ -60,7 +60,7 @@
             </div>
 
             <!-- Berita Section -->
-            <div class="col-lg-4">
+            <div class="col-12 col-lg-4">
                 <h4 class="fw-bold mb-4" style="color: #dc2626;">Berita Terbaru</h4>
                 @foreach($beritas as $berita)
                     <a href="{{ route('public.berita.show', $berita->id) }}" class="text-decoration-none">

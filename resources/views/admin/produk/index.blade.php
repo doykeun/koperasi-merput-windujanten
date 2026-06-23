@@ -16,7 +16,8 @@
         </a>
     </div>
     <div class="card-body p-4">
-        <table class="table table-hover align-middle">
+        <div class="table-responsive">
+            <table class="table table-hover align-middle">
             <thead class="table-light">
                 <tr>
                     <th>No</th>
@@ -67,7 +68,8 @@
                     </tr>
                 @endforeach
             </tbody>
-        </table>
+            </table>
+        </div>
     </div>
 </div>
 @endsection

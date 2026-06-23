@@ -11,7 +11,7 @@
         
         <div class="row g-4">
             @foreach($struktur as $item)
-                <div class="col-md-4 col-lg-3">
+                <div class="col-12 col-sm-6 col-md-4 col-lg-3">
                     <div class="card h-100 border-0 shadow-sm overflow-hidden">
                         <div class="card-body text-center p-4">
                             @if($item->foto)

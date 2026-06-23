@@ -18,7 +18,7 @@
     <div class="card-body p-4">
         <div class="row g-4">
             @foreach($struktur as $item)
-                <div class="col-md-4">
+                <div class="col-12 col-sm-6 col-md-4">
                     <div class="card h-100 border-0 shadow-sm text-center overflow-hidden">
                         @if($item->foto)
                             <img src="{{ asset('storage/' . $item->foto) }}" class="mx-auto mt-4" alt="{{ $item->nama }}" style="height: 200px; width: 200px; object-fit: cover; border-radius: 50%;">
