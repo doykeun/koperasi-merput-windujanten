@@ -37,11 +37,8 @@
                             <h5 class="card-title fw-bold" style="color: #dc2626;">{{ $berita->judul }}</h5>
                             <p class="card-text text-muted">{{ Str::limit($berita->isi, 100) }}</p>
                             <div class="d-flex gap-2">
-                                <a href="{{ route('admin.berita.show', $berita->id) }}" class="btn btn-outline-primary btn-sm flex-grow-1">
-                                    <i class="bi bi-eye"></i> Lihat
-                                </a>
-                                <a href="{{ route('admin.berita.edit', $berita->id) }}" class="btn btn-outline-danger btn-sm">
-                                    <i class="bi bi-pencil"></i>
+                                <a href="{{ route('admin.berita.edit', $berita->id) }}" class="btn btn-outline-danger btn-sm flex-grow-1">
+                                    <i class="bi bi-pencil"></i> Edit
                                 </a>
                                 <form action="{{ route('admin.berita.destroy', $berita->id) }}" method="POST" class="d-inline">
                                     @csrf
