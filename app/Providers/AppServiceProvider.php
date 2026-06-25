@@ -40,11 +40,11 @@ class AppServiceProvider extends ServiceProvider
             }
         }
 
-        // Helper for displaying storage images with fallback
+        // Helper for displaying storage images with fallback (tanpa symlink)
         View::composer('*', function ($view) {
             $view->with('storageImage', function ($path, $default = null) {
                 if ($path && Storage::disk('public')->exists($path)) {
-                    return Storage::disk('public')->url($path);
+                    return route('storage.image', $path);
                 }
                 return $default;
             });

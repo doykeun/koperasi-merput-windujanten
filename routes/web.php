@@ -9,6 +9,7 @@ use App\Http\Controllers\StrukturOrganisasiController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 use App\Models\Produk;
 use App\Models\Berita;
 
@@ -22,6 +23,14 @@ use App\Models\Berita;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+
+// Route untuk menampilkan gambar dari storage (tanpa symlink)
+Route::get('/storage/{path}', function ($path) {
+    if (!Storage::disk('public')->exists($path)) {
+        abort(404);
+    }
+    return Storage::disk('public')->response($path);
+})->where('path', '.*')->name('storage.image');
 
 // Redirect root to public homepage
 Route::redirect('/', '/koperasi_merput_windujanten');
