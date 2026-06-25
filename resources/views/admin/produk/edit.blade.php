@@ -44,9 +44,9 @@
             </div>
             <div class="mb-4">
                 <label for="foto" class="form-label fw-semibold">Foto Produk</label>
-                @if($produk->foto)
+                @if($storageImage($produk->foto))
                     <div class="mb-2">
-                        <img src="{{ asset('storage/' . $produk->foto) }}" alt="{{ $produk->nama_produk }}" style="width: 120px; height: 120px; object-fit: cover; border-radius: 8px; border: 2px solid #dee2e6;">
+                        <img src="{{ $storageImage($produk->foto) }}" alt="{{ $produk->nama_produk }}" style="width: 120px; height: 120px; object-fit: cover; border-radius: 8px; border: 2px solid #dee2e6;">
                     </div>
                 @endif
                 <input type="file" class="form-control" id="foto" name="foto" accept="image/*">

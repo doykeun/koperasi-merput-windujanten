@@ -40,9 +40,9 @@
             
             <div class="mb-3">
                 <label for="foto" class="form-label">Foto (opsional)</label>
-                @if($struktur->foto)
+                @if($storageImage($struktur->foto))
                     <div class="mb-2">
-                        <img src="{{ asset('storage/' . $struktur->foto) }}" alt="Foto" style="height: 100px; width: 100px; object-fit: cover; border-radius: 50%;">
+                        <img src="{{ $storageImage($struktur->foto) }}" alt="Foto" style="height: 100px; width: 100px; object-fit: cover; border-radius: 50%;">
                     </div>
                 @endif
                 <input type="file" class="form-control @error('foto') is-invalid @enderror" id="foto" name="foto" accept="image/*">

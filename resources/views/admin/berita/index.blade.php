@@ -20,8 +20,8 @@
             @foreach($beritas as $berita)
                 <div class="col-12 col-sm-6 col-md-4">
                     <div class="card h-100 border-0 shadow-sm overflow-hidden">
-                        @if($berita->foto)
-                            <img src="{{ asset('storage/' . $berita->foto) }}" class="card-img-top" alt="{{ $berita->judul }}" style="height: 200px; object-fit: cover;">
+                        @if($storageImage($berita->foto))
+                            <img src="{{ $storageImage($berita->foto) }}" class="card-img-top" alt="{{ $berita->judul }}" style="height: 200px; object-fit: cover;">
                         @else
                             <div class="d-flex align-items-center justify-content-center" style="height: 200px; background: #fef2f2;">
                                 <span style="color: #dc2626;"><i class="bi bi-image fs-1"></i></span>

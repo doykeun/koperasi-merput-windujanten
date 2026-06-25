@@ -34,8 +34,8 @@
                     <tr>
                         <td>{{ $key + 1 }}</td>
                         <td>
-                            @if($produk->foto)
-                                <img src="{{ asset('storage/' . $produk->foto) }}" alt="{{ $produk->nama_produk }}" style="width: 60px; height: 60px; object-fit: cover; border-radius: 8px;">
+                            @if($storageImage($produk->foto))
+                                <img src="{{ $storageImage($produk->foto) }}" alt="{{ $produk->nama_produk }}" style="width: 60px; height: 60px; object-fit: cover; border-radius: 8px;">
                             @else
                                 <div style="width: 60px; height: 60px; background: #fef2f2; border-radius: 8px; display: flex; align-items: center; justify-content: center; color: #dc2626;">
                                     <i class="bi bi-image fs-4"></i>

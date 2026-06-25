@@ -20,8 +20,8 @@
             @foreach($struktur as $item)
                 <div class="col-12 col-sm-6 col-md-4">
                     <div class="card h-100 border-0 shadow-sm text-center overflow-hidden">
-                        @if($item->foto)
-                            <img src="{{ asset('storage/' . $item->foto) }}" class="mx-auto mt-4" alt="{{ $item->nama }}" style="height: 200px; width: 200px; object-fit: cover; border-radius: 50%;">
+                        @if($storageImage($item->foto))
+                            <img src="{{ $storageImage($item->foto) }}" class="mx-auto mt-4" alt="{{ $item->nama }}" style="height: 200px; width: 200px; object-fit: cover; border-radius: 50%;">
                         @else
                             <div class="d-flex align-items-center justify-content-center mx-auto mt-4" style="height: 200px; width: 200px; border-radius: 50%; background: #fef2f2;">
                                 <i class="bi bi-person" style="color: #dc2626; font-size: 4rem;"></i>

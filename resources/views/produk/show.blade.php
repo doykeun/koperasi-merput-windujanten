@@ -20,8 +20,8 @@
                     <!-- Product Image -->
                     <div class="col-lg-6">
                         <div class="d-flex justify-content-center p-4 bg-light rounded-4">
-                            @if($produk->foto)
-                                <img src="{{ asset('storage/' . $produk->foto) }}" class="img-fluid rounded-3 shadow-sm" alt="{{ $produk->nama_produk }}" style="max-height: 450px; object-fit: contain;">
+                            @if($storageImage($produk->foto))
+                                <img src="{{ $storageImage($produk->foto) }}" class="img-fluid rounded-3 shadow-sm" alt="{{ $produk->nama_produk }}" style="max-height: 450px; object-fit: contain;">
                             @else
                                 <div class="d-flex align-items-center justify-content-center rounded-3" style="height: 450px; width: 100%;">
                                     <i class="bi bi-box-seam text-muted fs-1"></i>
@@ -88,8 +88,8 @@
                         <div class="card h-100 shadow-sm border border-light-subtle">
                             <div class="card-body p-4">
                                 <div class="d-flex justify-content-center mb-3">
-                                    @if($related->foto)
-                                        <img src="{{ asset('storage/' . $related->foto) }}" alt="{{ $related->nama_produk }}" class="img-fluid" style="height: 150px; object-fit: contain;">
+                                    @if($storageImage($related->foto))
+                                        <img src="{{ $storageImage($related->foto) }}" alt="{{ $related->nama_produk }}" class="img-fluid" style="height: 150px; object-fit: contain;">
                                     @else
                                         <div class="bg-light d-flex align-items-center justify-content-center" style="height: 150px; width: 100%;">
                                             <i class="bi bi-box-seam text-muted fs-1"></i>

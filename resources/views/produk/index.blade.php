@@ -60,13 +60,13 @@
                                 <span class="stock-badge">Stok Tersedia</span>
                             @endif
                             <div class="d-flex justify-content-center mb-4">
-                                @if($produk->foto)
-                                    <img src="{{ asset('storage/' . $produk->foto) }}" alt="{{ $produk->nama_produk }}" class="img-fluid shadow-sm rounded-2" style="height: 200px; object-fit: contain;">
-                                @else
-                                    <div class="d-flex align-items-center justify-content-center rounded-3" style="height: 200px; width: 100%; background: #fef2f2;">
-                                        <i class="bi bi-box-seam" style="color: #dc2626; font-size: 3rem;"></i>
-                                    </div>
-                                @endif
+                                @if($storageImage($produk->foto))
+                                <img src="{{ $storageImage($produk->foto) }}" alt="{{ $produk->nama_produk }}" class="img-fluid shadow-sm rounded-2" style="height: 200px; object-fit: contain;">
+                            @else
+                                <div class="d-flex align-items-center justify-content-center rounded-3" style="height: 200px; width: 100%; background: #fef2f2;">
+                                    <i class="bi bi-box-seam" style="color: #dc2626; font-size: 3rem;"></i>
+                                </div>
+                            @endif
                             </div>
                             <div class="mb-3">
                                 <h5 class="fw-bold mb-1" style="color: #1f2937;">{{ $produk->nama_produk }}</h5>

@@ -32,13 +32,13 @@
                                         <span class="badge bg-danger mb-3">Stok Habis</span>
                                     @endif
                                     <div class="d-flex justify-content-center mb-3">
-                                        @if($produk->foto)
-                                            <img src="{{ asset('storage/' . $produk->foto) }}" alt="{{ $produk->nama_produk }}" class="img-fluid rounded-2" style="height: 150px; object-fit: contain;">
-                                        @else
-                                            <div class="d-flex align-items-center justify-content-center rounded" style="height: 150px; width: 100%; background: #fef2f2;">
-                                                <i class="bi bi-box" style="color: #dc2626; font-size: 2rem;"></i>
-                                            </div>
-                                        @endif
+                                        @if($storageImage($produk->foto))
+                                <img src="{{ $storageImage($produk->foto) }}" alt="{{ $produk->nama_produk }}" class="img-fluid rounded-2" style="height: 150px; object-fit: contain;">
+                            @else
+                                <div class="d-flex align-items-center justify-content-center rounded" style="height: 150px; width: 100%; background: #fef2f2;">
+                                    <i class="bi bi-box" style="color: #dc2626; font-size: 2rem;"></i>
+                                </div>
+                            @endif
                                     </div>
                                     <h6 class="fw-bold mb-1" style="color: #1f2937;">{{ $produk->nama_produk }}</h6>
                                     @if($produk->category)
@@ -65,13 +65,13 @@
                 @foreach($beritas as $berita)
                     <a href="{{ route('public.berita.show', $berita->id) }}" class="text-decoration-none">
                         <div class="news-card mb-3 border border-red-100 shadow-sm p-3 rounded hover:shadow-md transition-all">
-                            @if($berita->foto)
-                                <img src="{{ asset('storage/' . $berita->foto) }}" class="rounded" alt="{{ $berita->judul }}">
-                            @else
-                                <div class="d-flex align-items-center justify-content-center rounded" style="width: 80px; height: 80px; background: #fef2f2;">
-                                    <i class="bi bi-newspaper" style="color: #dc2626; font-size: 2rem;"></i>
-                                </div>
-                            @endif
+                            @if($storageImage($berita->foto))
+                            <img src="{{ $storageImage($berita->foto) }}" class="rounded" alt="{{ $berita->judul }}">
+                        @else
+                            <div class="d-flex align-items-center justify-content-center rounded" style="width: 80px; height: 80px; background: #fef2f2;">
+                                <i class="bi bi-newspaper" style="color: #dc2626; font-size: 2rem;"></i>
+                            </div>
+                        @endif
                             <div class="flex-1">
                                 <small class="fw-bold d-block mb-1" style="color: #dc2626;">Pengumuman</small>
                                 <h6 class="fw-bold mb-0" style="color: #1f2937;">{{ Str::limit($berita->judul, 40) }}</h6>

@@ -13,8 +13,8 @@
                 <p class="text-muted small mb-4">
                     <i class="bi bi-calendar me-1"></i> {{ $berita->created_at->format('d M Y') }}
                 </p>
-                @if($berita->foto)
-                    <img src="{{ asset('storage/' . $berita->foto) }}" class="img-fluid rounded mb-4 shadow-sm" alt="{{ $berita->judul }}">
+                @if($storageImage($berita->foto))
+                    <img src="{{ $storageImage($berita->foto) }}" class="img-fluid rounded mb-4 shadow-sm" alt="{{ $berita->judul }}">
                 @endif
                 <div class="lead">{{ $berita->isi }}</div>
             </div>
