@@ -421,7 +421,7 @@
                 <button class="menu-toggle" id="menuToggle">
                     <i class="bi bi-list"></i>
                 </button>
-                <h3 class="w-100 text-center">KOPERASI MERAH PUTIH WINDUJANTEN</h3>
+                <h3 class="w-100 text-center">KOPERASI MERAH PUTIH DESA WINDUJANTEN</h3>
             </div>
 
             <div class="main-content {{ !auth()->check() || !auth()->user()->is_admin ? 'login-mode' : '' }}">
