@@ -31,8 +31,20 @@
             height: 100vh;
             left: 0;
             top: 0;
-            z-index: 100;
+            z-index: 1000;
             box-shadow: 4px 0 20px rgba(0,0,0,0.1);
+            transform: translateX(0);
+            transition: transform 0.3s ease;
+        }
+        .sidebar-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.5);
+            z-index: 999;
+            display: none;
         }
         .sidebar-brand {
             color: white;
@@ -86,6 +98,7 @@
             flex: 1;
             margin-left: 280px;
             min-height: 100vh;
+            transition: margin-left 0.3s ease;
         }
         .main-content {
             flex: 1;
@@ -124,7 +137,7 @@
             border: 1px solid #fecaca;
             border-radius: 12px;
             box-shadow: 0 8px 24px rgba(220, 38, 38, 0.1);
-            padding: 40px;
+            padding: 40px 30px;
             width: 100%;
             max-width: 450px;
             position: relative;
@@ -266,6 +279,14 @@
             top: 0;
             z-index: 50;
         }
+        .menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: #dc2626;
+            cursor: pointer;
+        }
         .top-header h3 {
             font-size: 1.25rem;
             font-weight: 700;
@@ -298,14 +319,63 @@
         .alert {
             border-radius: 6px;
         }
+        /* Table responsive */
+        .table-responsive {
+            overflow-x: auto;
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 991.98px) {
+            .sidebar {
+                transform: translateX(-100%);
+            }
+            .sidebar.active {
+                transform: translateX(0);
+            }
+            .sidebar-overlay.active {
+                display: block;
+            }
+            .main-content-wrapper {
+                margin-left: 0;
+            }
+            .menu-toggle {
+                display: block;
+            }
+            .top-header {
+                padding: 12px 20px;
+            }
+            .top-header h3 {
+                font-size: 1.1rem;
+            }
+            .main-content {
+                padding: 20px;
+            }
+            .main-content.login-mode {
+                padding: 20px;
+            }
+        }
+
+        @media (max-width: 767.98px) {
+            .login-card {
+                padding: 30px 20px;
+            }
+            .login-header h1 {
+                font-size: 1.5rem;
+            }
+            .page-header h1 {
+                font-size: 1.5rem;
+            }
+        }
     </style>
 </head>
 <body>
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
     <div class="app-container">
-        <div class="sidebar">
+        <div class="sidebar" id="sidebar">
             <div class="sidebar-brand">Koperasi <span>Merah Putih</span></div>
             <div class="sidebar-subtitle">Koperasi Indonesia</div>
-            
+
             <nav class="sidebar-nav">
                 @if(auth()->check() && auth()->user()->is_admin)
                     <a href="/kopmerput-admin" class="{{ !request()->has('view') ? 'active' : '' }}">
@@ -348,9 +418,12 @@
 
         <div class="main-content-wrapper">
             <div class="top-header">
+                <button class="menu-toggle" id="menuToggle">
+                    <i class="bi bi-list"></i>
+                </button>
                 <h3 class="w-100 text-center">KOPERASI MERAH PUTIH WINDUJANTEN</h3>
             </div>
-            
+
             <div class="main-content {{ !auth()->check() || !auth()->user()->is_admin ? 'login-mode' : '' }}">
 
         @if(auth()->check() && auth()->user()->is_admin && request()->has('view') && request()->view == 'admin')
@@ -363,7 +436,7 @@
 
                 <!-- Quick Stats -->
                 <div class="row g-3 mb-4">
-                    <div class="col-md-3">
+                    <div class="col-md-3 col-sm-6">
                         <div class="card shadow-sm border-0 h-100">
                             <div class="card-body">
                                 <h5 class="card-title text-muted small mb-2">Total Produk</h5>
@@ -371,7 +444,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-3">
+                    <div class="col-md-3 col-sm-6">
                         <div class="card shadow-sm border-0 h-100">
                             <div class="card-body">
                                 <h5 class="card-title text-muted small mb-2">Total Berita</h5>
@@ -379,7 +452,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-3">
+                    <div class="col-md-3 col-sm-6">
                         <div class="card shadow-sm border-0 h-100">
                             <div class="card-body">
                                 <h5 class="card-title text-muted small mb-2">Produk Tersedia</h5>
@@ -387,7 +460,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-3">
+                    <div class="col-md-3 col-sm-6">
                         <div class="card shadow-sm border-0 h-100">
                             <div class="card-body">
                                 <h5 class="card-title text-muted small mb-2">Produk Habis</h5>
@@ -505,14 +578,14 @@
             <!-- Profile Content -->
             <div class="container-fluid">
                 <div class="row justify-content-center">
-                    <div class="col-lg-6 col-md-8 col-sm-10">
+                    <div class="col-lg-6 col-md-8 col-sm-10 col-12">
                         @if(session('status'))
                             <div class="alert alert-success mb-4">
                                 {{ session('status') === 'profile-updated' ? 'Profil berhasil diperbarui!' : 'Password berhasil diubah!' }}
                             </div>
                         @endif
                         <div class="card shadow-sm border-0">
-                            <div class="card-body p-5">
+                            <div class="card-body p-5 p-md-4 p-sm-3">
                                 <h5 class="card-title mb-4 d-flex align-items-center gap-2 fw-semibold">
                                     <i class="bi bi-person-circle text-danger fs-4"></i>
                                     Informasi Akun
@@ -551,11 +624,11 @@
                                         <input type="tel" name="phone" class="form-control" placeholder="Masukkan nomor telepon" value="{{ old('phone', auth()->user()->phone ?? '') }}">
                                     </div>
 
-                                    <div class="d-flex justify-content-between align-items-center">
+                                    <div class="d-flex flex-column flex-sm-row justify-content-between align-items-center gap-3">
                                         <button type="button" class="btn btn-link text-decoration-none text-danger p-0 fw-semibold" data-bs-toggle="modal" data-bs-target="#changePasswordModal">
                                             <i class="bi bi-key me-1"></i>Ubah Password
                                         </button>
-                                        <button type="submit" class="btn btn-danger px-4">
+                                        <button type="submit" class="btn btn-danger px-4 w-sm-auto w-100">
                                             <i class="bi bi-check-lg me-1"></i>Simpan
                                         </button>
                                     </div>
@@ -602,9 +675,9 @@
                                     <input type="password" name="password_confirmation" class="form-control" placeholder="Konfirmasi password baru" value="{{ old('password_confirmation') }}" required>
                                 </div>
                             </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-outline-danger btn-sm" data-bs-dismiss="modal">Batal</button>
-                                <button type="submit" class="btn btn-danger btn-sm">
+                            <div class="modal-footer flex-column flex-sm-row gap-2">
+                                <button type="button" class="btn btn-outline-danger btn-sm flex-grow-1" data-bs-dismiss="modal">Batal</button>
+                                <button type="submit" class="btn btn-danger btn-sm flex-grow-1">
                                     <i class="bi bi-check-lg me-1"></i>Ubah Password
                                 </button>
                             </div>
@@ -659,7 +732,7 @@
                         </div>
                     </div>
 
-                    <div class="form-options">
+                    <div class="form-options flex-column gap-3 align-items-start">
                         <div class="remember-me">
                             <input type="checkbox" id="remember" name="remember">
                             <label for="remember">Ingat saya</label>
@@ -695,6 +768,36 @@
                 this.classList.toggle('bi-eye-slash');
             });
         }
+
+        // Toggle sidebar for mobile
+        const menuToggle = document.getElementById('menuToggle');
+        const sidebar = document.getElementById('sidebar');
+        const sidebarOverlay = document.getElementById('sidebarOverlay');
+
+        if (menuToggle) {
+            menuToggle.addEventListener('click', function() {
+                sidebar.classList.toggle('active');
+                sidebarOverlay.classList.toggle('active');
+            });
+        }
+
+        if (sidebarOverlay) {
+            sidebarOverlay.addEventListener('click', function() {
+                sidebar.classList.remove('active');
+                sidebarOverlay.classList.remove('active');
+            });
+        }
+
+        // Close sidebar when clicking a link on mobile
+        const sidebarLinks = document.querySelectorAll('.sidebar-nav a');
+        sidebarLinks.forEach(link => {
+            link.addEventListener('click', function() {
+                if (window.innerWidth <= 991.98) {
+                    sidebar.classList.remove('active');
+                    sidebarOverlay.classList.remove('active');
+                }
+            });
+        });
 
         // Keep change password modal open if there are errors
         document.addEventListener('DOMContentLoaded', function() {
