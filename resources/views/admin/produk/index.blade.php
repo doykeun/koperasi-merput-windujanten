@@ -51,9 +51,6 @@
                             </span>
                         </td>
                         <td class="text-center">
-                            <a href="{{ route('admin.produk.show', $produk->id) }}" class="btn btn-outline-primary btn-sm me-1" title="Lihat">
-                                <i class="bi bi-eye"></i>
-                            </a>
                             <a href="{{ route('admin.produk.edit', $produk->id) }}" class="btn btn-outline-danger btn-sm me-1" title="Edit">
                                 <i class="bi bi-pencil"></i>
                             </a>
